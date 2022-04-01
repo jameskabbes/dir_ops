@@ -1,4 +1,4 @@
-[Documentation]({pages_url})
+[Documentation](https://jameskabbes.github.io/dir_ops)
 
 # {name}
 {description}
