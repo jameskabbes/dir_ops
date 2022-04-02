@@ -7,7 +7,9 @@ import datetime
 import subprocess
 import platform
 import functools
-from typing import List, Any
+from typing import List, Any, Tuple
+
+from numpy import block
 
 from parent_class import ParentClass
 from py_starter import py_starter as ps
@@ -70,27 +72,6 @@ def convert_bytes( bytes: int, conversion: str = 'MB' ) -> Tuple[ Any, Any ]:
 
     return bytes, None
 
-def walk_root_dir( path ):
-
-    roots = []
-    dirs = []
-    files = []
-
-    for i,j,k in os.walk(path):
-
-        roots.append(i)
-        dirs.append(j)
-        files.append(k)
-
-    return roots, dirs, files
-
-def rename_files_to_new_directory( input_folder, export_folder ):
-
-    full_input_paths = get_paths_with_common_parent( input_folder )
-    relative_input_paths = remove_prefix_from_paths( input_folder, full_input_paths )
-    full_export_paths = add_prefix_to_paths( export_folder, relative_input_paths )
-
-    return full_input_paths, full_export_paths
 
 def add_prefix_to_paths( prefix_path, relative_paths ):
 
@@ -117,22 +98,6 @@ def remove_prefix_from_paths( prefix_path, full_paths ):
         relative_paths.append( join(*relative_list) )
 
     return relative_paths
-
-def get_paths_with_common_parent( path ):
-
-    """Returns full paths with common parent path
-     Note: does not return empty directories"""
-
-    roots, dirs, files = walk_root_dir( path )
-    full_paths = []
-
-    for i in range(len(roots)):
-        for file in files[i]:
-
-            full_path = join( roots[i], file )
-            full_paths.append( full_path )
-
-    return full_paths
 
 def remove_hanging_slashes( path ):
 
@@ -289,19 +254,10 @@ class Dir (ParentClass) :
         """Opens the dir in the file explorer """
 
         if platform.system() == 'Windows':
-            os.startfile(path)
+            os.startfile(dir)
 
         elif platform.system() == 'Darwin':
-            subprocess.call(['open', path])
-
-    @instance_method
-    def get_unique_filename( self, *args, **kwargs ):
-        pass
-
-    def get_unique_filename_dir( self, filename ):
-
-        if self.type_dir:
-            return get_unique_filename( filename, export_dir = self.p )
+            subprocess.call(['open', dir])
 
     @instance_method
     def exists( self, *args, **kwargs ):
@@ -413,20 +369,41 @@ class Dir (ParentClass) :
             
         return Paths_inst
 
-    def walk_contents_Paths( self, block_dirs: bool = True, block_paths: bool = False, folders_to_skip: List[str] = [] ) -> Paths:
+    def walk( self, folders_to_skip: List[str] = ['.git'] ) -> Paths:
+
+        """Walk through all the contents of the directory"""
+
+        Paths_inst = Paths()
+        Paths_inst._add( self )
+
+        Paths_under = self.list_contents_Paths( block_dirs = False, block_paths = False )
+        for Path_inst in Paths_under:
+
+            if Path.is_Path( Path_inst ):
+                Paths_inst._add( Path_inst )
+
+            elif Path.is_Dir( Path_inst ):
+                
+                if Path_inst.dirs[-1] not in folders_to_skip:
+                    Paths_inst.merge( Path_inst.walk( folders_to_skip = folders_to_skip ) )
+
+        return Paths_inst
+
+    def walk_contents_Paths( self, block_dirs: bool = True, block_paths: bool = False, folders_to_skip: List[str] = ['.git'] ) -> Paths:
 
         """get all Paths and/or Dirs underneath the entire directory, optional params for returning paths and/or dirs"""
 
-        Paths_inst = Paths()
-        subfolders = get_subfolders_under_parent( dir, folders_to_skip = folders_to_skip )
-        for subfolder in subfolders:
-            Paths_under_subfolder = list_contents_Paths( subfolder, block_dirs = block_dirs, block_paths = block_paths )
+        Paths_inst = self.walk( folders_to_skip=folders_to_skip )
+        keep_Paths = Paths()
 
-            for Path_under_subfolder in Paths_under_subfolder:
-                if not is_dir(Path_under_subfolder.p) and Path_under_subfolder.dirs[-1] not in folders_to_skip:
-                    Paths.append( Path_under_subfolder )
+        for Path_inst in Paths_inst:
+            if Path_inst.type_path and not block_paths:
+                keep_Paths._add( Path_inst )
 
-        return Paths
+            if Path_inst.type_dir and not block_dirs:
+                keep_Paths._add( Path_inst )
+        
+        return keep_Paths
 
     def get_child_Dirs( self, folders_to_skip: List[str] = ['.git'] ) -> Dirs:
                 
@@ -561,7 +538,7 @@ class Path( Dir ):
             inp = input('Type "delete" to delete ' + str(path) + ': ')
 
         if inp == 'delete':
-            if path_exists(path):
+            if Path.path_exists(path):
                 if print_off:
                     print ('Deleting file ' + str(path))
                 try:
@@ -597,30 +574,20 @@ class Path( Dir ):
         else:
             return False
 
-    @instance_method
-    def get_size( self, *args, **kwargs ):
-        pass
-
-    @staticmethod
-    def get_size_path( path, **kwargs ) -> None:
+    def get_size( self, **kwargs ) -> None:
 
         """get the size of the path"""
 
-        size = os.stat( path ).st_size
+        size = os.stat( self.path ).st_size
         converted_size, conversion = convert_bytes( size, **kwargs )
 
         self.size = converted_size
         self.size_units = conversion
 
-
-    @instance_method
-    def get_mtime( self, *args, **kwargs ):
-        pass
-
-    @staticmethod
-    def get_mtime_path( path ):
+    def get_mtime( self, *args, **kwargs ) -> datetime.datetime:
 
         """get the time of modification as a datetime object"""
+
         mtime = pathlib.Path(self.p).stat().st_mtime
         self.mtime = datetime.datetime.fromtimestamp( mtime )
         return self.mtime
@@ -816,4 +783,6 @@ class Paths( Dirs ):
 
         self.len_Paths = len(self)
         return self._print_one_line_atts_helper( atts = ['type','len_Paths'], print_off = print_off, leading_string = leading_string )
+
+
 
