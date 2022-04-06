@@ -244,6 +244,14 @@ class Dir (ParentClass) :
         """add more dirs to the Dir path"""
         return join( dir, *other_dirs )
 
+    def join_Dir( self, other_Dir: Dir ) -> Dir:
+
+        return Dir( self.join( other_Dir.path ) )
+
+    def join_Path( self, other_Path: Path ) -> Path:
+
+        return Path( self.join( other_Path.path ) )
+
     @instance_method
     def open( self, *args, **kwargs ):
         pass
@@ -349,6 +357,16 @@ class Dir (ParentClass) :
         """returns all directories and files contained in dir""" 
         return os.listdir( dir )
 
+    def get_rel( self, other_Dir ) -> Dir:
+
+        """Given a Dir object, find the relative Dir from Dir to self"""
+
+        return Dir( Dir.get_rel_dir( self.path, other_Dir.path ) )
+
+    @staticmethod
+    def get_rel_dir( dir, other_dir ) -> str:
+        return os.path.relpath( dir, other_dir )
+
     def list_contents_Paths( self, block_dirs: bool = True, block_paths: bool = False ) -> Paths: 
 
         """returns all first sublevel contents of Directory as a Paths instance"""
@@ -402,7 +420,7 @@ class Dir (ParentClass) :
 
             if Path_inst.type_dir and not block_dirs:
                 keep_Paths._add( Path_inst )
-        
+
         return keep_Paths
 
     def get_child_Dirs( self, folders_to_skip: List[str] = ['.git'] ) -> Dirs:
@@ -507,6 +525,7 @@ class Path( Dir ):
         """copies an the contents from source to destination"""
 
         if destination_Path != None:
+            destination_Path.create_parents()
             destination_path = destination_Path.path
 
         if print_off:
@@ -631,7 +650,17 @@ class Path( Dir ):
 
         """imports the contents of path as a module"""
         return ps.import_module_from_path( path, **kwargs )
-    
+
+    def get_rel( self, Dir_inst ) -> Path:
+
+        """Given a Dir object, find the relative Path from Dir to self"""
+
+        return Path( Path.get_rel_path( self.path, Dir_inst.path ) )
+
+    @staticmethod
+    def get_rel_path( path, dir ) -> str:
+        return os.path.relpath( path, dir )
+
     @staticmethod
     def get_filename( path: str ) -> str:
 
@@ -734,6 +763,22 @@ class Dirs(ParentClass):
         self.len_Dirs = len(self)
         return self._print_one_line_atts_helper( atts = ['type','len_Dirs'], print_off = print_off, leading_string = leading_string )
 
+    def join_Dir( self, Dir_inst: Dir ) -> Paths:
+
+        """Joins Dir_inst to each Dir/Path contained in the Object"""
+
+        Paths_inst = Paths()
+
+        for DirPath in self:
+
+            if DirPath.type_path:
+                Paths_inst._add( Dir_inst.join_Path( DirPath ) )
+            
+            if DirPath.type_dir:
+                Paths_inst._add( Dir_inst.join_Dir( DirPath ) )
+
+        return Paths_inst
+
     def merge( self, other_Dirs: Any ):
 
         """add all Dir objects from another Dirs instance to self"""
@@ -785,4 +830,24 @@ class Paths( Dirs ):
         return self._print_one_line_atts_helper( atts = ['type','len_Paths'], print_off = print_off, leading_string = leading_string )
 
 
+    def get_rels( self, Dir_inst ) -> Paths:
+
+        """Given a Dir object, find the relative Paths from Dir to the Paths"""
+
+        Paths_inst = Paths()
+        for P in self:
+            Paths_inst._add( P.get_rel( Dir_inst ) )
+
+        return Paths_inst
+
+
+
+if __name__ == '__main__':
+
+    D = Dir( 'C:/Path/To/Dir' )
+    D2 = Dir( 'C:/Path/To/Dir/Again/Another')
+
+    print( D2.get_rel( D ) )
+    print( Dir.get_rel_dir( D2.path, D.path ) )
+        
 
