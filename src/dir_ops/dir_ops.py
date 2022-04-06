@@ -557,7 +557,7 @@ class Path( Dir ):
             inp = input('Type "delete" to delete ' + str(path) + ': ')
 
         if inp == 'delete':
-            if Path.path_exists(path):
+            if Path.exists_path(path):
                 if print_off:
                     print ('Deleting file ' + str(path))
                 try:
@@ -841,13 +841,17 @@ class Paths( Dirs ):
         return Paths_inst
 
 
-
-if __name__ == '__main__':
+def run( *args ):
 
     D = Dir( 'C:/Path/To/Dir' )
     D2 = Dir( 'C:/Path/To/Dir/Again/Another')
 
     print( D2.get_rel( D ) )
     print( Dir.get_rel_dir( D2.path, D.path ) )
+
+
+if __name__ == '__main__':
+
+    run()
         
 
