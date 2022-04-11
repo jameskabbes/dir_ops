@@ -651,6 +651,23 @@ class Path( Dir ):
         """imports the contents of path as a module"""
         return ps.import_module_from_path( path, **kwargs )
 
+    @instance_method
+    def smart_format( self, *args, **kwargs) -> str:
+        pass
+
+    @staticmethod
+    def smart_format_path( path, formatting_dict, write = True, **kwargs ) -> str:
+
+        """passthrough function for py_starter.smart_format()"""
+        string = Path.read_path( path )
+        formatted_string = ps.smart_format( string, formatting_dict, **kwargs )
+
+        if write:
+            Path.write_path( path, string = formatted_string )
+
+        return formatted_string
+
+
     def get_rel( self, Dir_inst ) -> Path:
 
         """Given a Dir object, find the relative Path from Dir to self"""
