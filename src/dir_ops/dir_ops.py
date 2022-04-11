@@ -9,10 +9,8 @@ import platform
 import functools
 from typing import List, Any, Tuple
 
-from numpy import block
-
 from parent_class import ParentClass
-from py_starter import py_starter as ps
+import py_starter.py_starter as ps
 
 
 DELIM = '/'
