@@ -10,8 +10,7 @@ import functools
 from typing import List, Any, Tuple
 
 from parent_class import ParentClass
-import py_starter.py_starter as ps
-
+import py_starter as ps
 
 DELIM = '/'
 SECONDARY_DELIM = '\\'
@@ -855,18 +854,5 @@ class Paths( Dirs ):
 
         return Paths_inst
 
-
-def run( *args ):
-
-    D = Dir( 'C:/Path/To/Dir' )
-    D2 = Dir( 'C:/Path/To/Dir/Again/Another')
-
-    print( D2.get_rel( D ) )
-    print( Dir.get_rel_dir( D2.path, D.path ) )
-
-
-if __name__ == '__main__':
-
-    run()
-        
+   
 
