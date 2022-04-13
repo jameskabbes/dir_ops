@@ -1,0 +1,2 @@
+kabbes_py_starter>=0.7.0
+kabbes_parent_class>=0.4.0
