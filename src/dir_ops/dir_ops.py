@@ -161,8 +161,6 @@ def join_env_var_paths( paths: List[str] ) -> str:
 
 
 
-
-
 def instance_method(method):
 
     """instance methods call the corresponding staticmethod 
@@ -186,6 +184,10 @@ class Dir (ParentClass) :
         ParentClass.__init__( self )
         self.dir_construct( *args, **kwargs )
 
+        self.PATHS_CLASS = Paths
+        self.DIR_CLASS = Dir
+
+
     def __eq__( self, other_Dir ):
 
         if isinstance( other_Dir, Dir ):
@@ -199,6 +201,9 @@ class Dir (ParentClass) :
         self.dirs = path_to_dirs( self.path )                #[ 'C','Users','e150445','Documents','MO-EE','Data','Raw' ]
         self.type_path = False
         self.type_dir = True
+
+        self.size = None                          # don't init with checking the size, takes too long
+        self.size_units = None
 
         #alias just for quick coding
         self.p = self.path
@@ -239,7 +244,11 @@ class Dir (ParentClass) :
     def join_dir( dir: str, *other_dirs, **kwargs ):
         
         """add more dirs to the Dir path"""
-        return join( dir, *other_dirs )
+        if dir != '':
+            return join( dir, *other_dirs )
+        else:
+            return join( *other_dirs )
+
 
     def join_Dir( self, other_Dir: Dir ) -> Dir:
 
@@ -354,6 +363,19 @@ class Dir (ParentClass) :
         """returns all directories and files contained in dir""" 
         return os.listdir( dir )
 
+    def get_size( self, *args, **kwargs ):
+
+        Paths_inst = self.list_contents_Paths( block_dirs=True, block_paths=False )
+
+        bytes = 0
+        for Path_inst in Paths_inst:
+            Path_inst.get_size( conversion = None )
+            bytes += Path_inst.size 
+        
+        converted_size, conversion = convert_bytes( bytes, **kwargs )
+        self.size = converted_size
+        self.size_units = conversion
+
     def get_rel( self, other_Dir ) -> Dir:
 
         """Given a Dir object, find the relative Dir from Dir to self"""
@@ -362,14 +384,18 @@ class Dir (ParentClass) :
 
     @staticmethod
     def get_rel_dir( dir, other_dir ) -> str:
-        return os.path.relpath( dir, other_dir )
+        
+        if dir != '':
+            return os.path.relpath( dir, other_dir )
+        else:
+            return other_dir
 
     def list_contents_Paths( self, block_dirs: bool = True, block_paths: bool = False ) -> Paths: 
 
         """returns all first sublevel contents of Directory as a Paths instance"""
 
         filenames = self.list_contents() # a list of filenames and directories
-        Paths_inst = Paths()
+        Paths_inst = self.PATHS_CLASS()
 
         for filename in filenames:
             path = self.join( filename )
@@ -388,16 +414,18 @@ class Dir (ParentClass) :
 
         """Walk through all the contents of the directory"""
 
-        Paths_inst = Paths()
+        Paths_inst = self.PATHS_CLASS()
         Paths_inst._add( self )
 
         Paths_under = self.list_contents_Paths( block_dirs = False, block_paths = False )
+
         for Path_inst in Paths_under:
 
-            if Path.is_Path( Path_inst ):
+            # all Paths are also Dirs
+            if Path_inst.type_path:
                 Paths_inst._add( Path_inst )
 
-            elif Path.is_Dir( Path_inst ):
+            elif Path_inst.type_dir:
                 
                 if Path_inst.dirs[-1] not in folders_to_skip:
                     Paths_inst.merge( Path_inst.walk( folders_to_skip = folders_to_skip ) )
@@ -409,7 +437,7 @@ class Dir (ParentClass) :
         """get all Paths and/or Dirs underneath the entire directory, optional params for returning paths and/or dirs"""
 
         Paths_inst = self.walk( folders_to_skip=folders_to_skip )
-        keep_Paths = Paths()
+        keep_Paths = self.PATHS_CLASS()
 
         for Path_inst in Paths_inst:
             if Path_inst.type_path and not block_paths:
@@ -422,7 +450,7 @@ class Dir (ParentClass) :
 
     def get_child_Dirs( self, folders_to_skip: List[str] = ['.git'] ) -> Dirs:
                 
-        child_Dirs = Dirs()
+        child_Dirs = self.DIR_CLASS()
         child_Dirs._add( self )
 
         Dirs_under = self.list_contents_Paths( block_dirs = False, block_paths = True )
@@ -590,23 +618,31 @@ class Path( Dir ):
         else:
             return False
 
-    def get_size( self, **kwargs ) -> None:
+    def get_size( self, *args, **kwargs ) -> None:
 
         """get the size of the path"""
 
-        size = os.stat( self.path ).st_size
-        converted_size, conversion = convert_bytes( size, **kwargs )
-
+        converted_size, conversion = self.get_size_path( self, **kwargs )
         self.size = converted_size
         self.size_units = conversion
 
-    def get_mtime( self, *args, **kwargs ) -> datetime.datetime:
+    @staticmethod
+    def get_size_path( path, *args, **kwargs ) -> Tuple[ float, str ]:
+
+        size = os.stat( path ).st_size
+        return convert_bytes( size, **kwargs )
+
+    def get_mtime( self, *args, **kwargs ):
+        self.mtime = self.get_mtime_path( self.path )
+
+    @staticmethod
+    def get_mtime_path( path, *args, **kwargs ) -> datetime.datetime:
 
         """get the time of modification as a datetime object"""
 
-        mtime = pathlib.Path(self.p).stat().st_mtime
-        self.mtime = datetime.datetime.fromtimestamp( mtime )
-        return self.mtime
+        mtime = pathlib.Path(path).stat().st_mtime
+        dt = datetime.datetime.fromtimestamp( mtime )
+        return dt
 
     @instance_method
     def write( self, *args, **kwargs):
@@ -722,6 +758,8 @@ class Dirs(ParentClass):
         for d in dirs:
             self._add( Dir( d ) )
 
+        self.PATHS_CLASS = Paths
+
     @staticmethod
     def is_Dirs( Object: Any ) -> bool:
 
@@ -781,7 +819,7 @@ class Dirs(ParentClass):
 
         """Joins Dir_inst to each Dir/Path contained in the Object"""
 
-        Paths_inst = Paths()
+        Paths_inst = self.PATHS_CLASS()
 
         for DirPath in self:
 
@@ -821,6 +859,8 @@ class Paths( Dirs ):
         for p in paths:
             self._add( Path( p ) )
 
+        self.PATHS_CLASS = Paths
+
     @staticmethod
     def is_Paths( Object: Any ) -> bool:
 
@@ -848,7 +888,7 @@ class Paths( Dirs ):
 
         """Given a Dir object, find the relative Paths from Dir to the Paths"""
 
-        Paths_inst = Paths()
+        Paths_inst = self.PATHS_CLASS()
         for P in self:
             Paths_inst._add( P.get_rel( Dir_inst ) )
 
