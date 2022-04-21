@@ -793,16 +793,16 @@ class Dirs(ParentClass):
     STATIC_METHOD_SUFFIX = '_dirs'
     INSTANCE_METHOD_ATTS = ['path']
 
-    def __init__ ( self, Dirs = [], dirs = [] ):
+    def __init__ ( self, given_Dirs = [], given_dirs = [] ):
 
         ParentClass.__init__( self )
 
         self.Dirs = []
         self.Objs = self.Dirs # Make an Alias
 
-        for D in Dirs:
+        for D in given_Dirs:
             self._add( D )
-        for d in dirs:
+        for d in given_dirs:
             self._add( Dir( d ) )
 
         self.DIR_CLASS = Dir
@@ -900,16 +900,16 @@ class Paths( Dirs ):
     STATIC_METHOD_SUFFIX = '_paths'
     INSTANCE_METHOD_ATTS = ['path']
 
-    def __init__ ( self, Paths = [], paths = [] ):
+    def __init__ ( self, given_Paths = [], given_paths = [] ):
 
         ParentClass.__init__( self )
 
         self.Paths = []
         self.Objs = self.Paths # Make an Alias
 
-        for P in Paths:
+        for P in given_Paths:
             self._add( P )
-        for p in paths:
+        for p in given_paths:
             self._add( Path( p ) )
 
         self.DIR_CLASS = Dir
