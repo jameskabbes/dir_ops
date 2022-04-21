@@ -159,6 +159,47 @@ def join_env_var_paths( paths: List[str] ) -> str:
     """ returns 'C:/Path1;C:/Path2' """
     return get_env_var_path_delim().join( paths )
 
+def print_to_from( print_off: bool, action_str: str, from_str: str, to_str: str ):
+
+    """ Copying C:/Users/path/file.txt ->  C:/Users/newfile.txt """
+
+    if print_off:
+        print ( "{action_str} \t {from_str} -> \t {to_str}".format( action_str = action_str, to_str = to_str, from_str = from_str ) )
+
+### Decorators
+
+def copy_wrap( method ):
+
+    @functools.wraps( method )
+    def wrapper( self, *args, override: bool = False, print_off: bool = False, 
+                    Destination = None, destination = None, **kwargs ):
+
+        #whether this is a Dir or a Path, create the parents before copying        
+        if Destination == None:
+            if self.type_path:
+                Destination = Path( destination )
+            if self.type_dir:
+                Destination = Dir( destination )
+
+        Destination.create_parents()
+
+        #check to make sure the user wants to do this
+        if not override:
+            print_to_from( True, 'Copying', str(self), str(Destination) )
+            override = ps.confirm_raw( string = '' )
+
+        # perform the actual method        
+        if override:
+            print_to_from( print_off, 'Copying', str(self), str(Destination) )
+
+            if method( self, *args, destination = Destination.path, override=override, print_off=print_off, **kwargs ):
+                return True
+
+        return False
+
+    return wrapper
+
+
 def remove_wrap( method ):
 
     @functools.wraps( method )
@@ -168,8 +209,7 @@ def remove_wrap( method ):
             override = ps.confirm_raw( string = 'This operation will delete ' + str(self) )
         
         if override:
-            if print_off:
-                print ('Deleting ' + str(self) + '...')
+            print_to_from( print_off, 'Removing', str(self), '' )
 
             if method( self, *args, **kwargs ):
                 return True
@@ -328,8 +368,8 @@ class Dir (ParentClass) :
         pass
 
     @staticmethod
-    def exists_dir( path: str, *args, **kwargs ) -> bool:
-        return os.path.exists( path )
+    def exists_dir( dir: str, *args, **kwargs ) -> bool:
+        return os.path.exists( dir )
 
     @remove_wrap
     @inherited_instance_method
@@ -337,12 +377,12 @@ class Dir (ParentClass) :
         pass
     
     @staticmethod
-    def remove_dir( path: str, *args, **kwargs ) -> bool:
+    def remove_dir( dir: str, *args, **kwargs ) -> bool:
 
         """deletes the entire folder and all contents underneath, returns True is successful"""
 
         try:
-            shutil.rmtree(path)
+            shutil.rmtree(dir)
         except:
             return False
 
@@ -350,16 +390,21 @@ class Dir (ParentClass) :
 
     def create(self, *args, **kwargs) -> bool:
 
-        """creates a directory at dir"""
+        """creates a directory and parent directories of dir"""
 
         if not self.exists():
             self.create_parents()
-            try:
-                os.mkdir( self.path )
-            except:
-                return False
-            return True
-        return False
+        
+        return self.create_dir( self.path )
+
+    @staticmethod
+    def create_dir( dir: str ) -> bool:
+
+        try:
+            os.mkdir( dir )
+        except:
+            return False
+        return True
 
     def create_parents(self):
 
@@ -373,25 +418,16 @@ class Dir (ParentClass) :
             parent_Dir.create_parents()
             parent_Dir.create()
 
+    @copy_wrap
     @inherited_instance_method
     def copy(self, *args, **kwargs):
         pass
 
     @staticmethod
-    def copy_dir( source_dir: str, destination_Dir = None, destination_dir: str = '', print_off: bool = True ) -> bool:
-
-        """copies an entire tree of files from source to destination"""
-
-        if destination_Dir != None:
-            destination_dir = destination_Dir.path
-
-        if print_off:
-            print ('Copy Location: ' + source_dir)
-            print ('Paste Location: ' + destination_dir)
-            print ('copying Tree...')
+    def copy_dir( dir: str, destination: str = '') -> bool:
 
         try:
-            shutil.copytree( source_dir, destination_dir )
+            shutil.copytree( dir, destination )
         except:
             return False
         return True
@@ -406,8 +442,14 @@ class Dir (ParentClass) :
         """returns all directories and files contained in dir""" 
         return os.listdir( dir )
 
+    @get_size_wrap
+    @inherited_instance_method
     def get_size( self, *args, **kwargs ):
+        pass
 
+    def get_size_dir( dir: str, *args, **kwargs ):
+
+        self = Dir( dir )
         Paths_inst = self.list_contents_Paths( block_dirs=True, block_paths=False )
 
         bytes = 0
@@ -415,15 +457,13 @@ class Dir (ParentClass) :
             Path_inst.get_size( conversion = None )
             bytes += Path_inst.size 
         
-        converted_size, conversion = convert_bytes( bytes, **kwargs )
-        self.size = converted_size
-        self.size_units = conversion
+        return convert_bytes( bytes, **kwargs )
 
     def get_rel( self, other_Dir ) -> Dir:
 
         """Given a Dir object, find the relative Dir from Dir to self"""
 
-        return Dir( Dir.get_rel_dir( self.path, other_Dir.path ) )
+        return Dir( self.get_rel_dir( self.path, other_Dir.path ) )
 
     @staticmethod
     def get_rel_dir( dir, other_dir ) -> str:
@@ -491,19 +531,6 @@ class Dir (ParentClass) :
 
         return keep_Paths
 
-    def get_child_Dirs( self, folders_to_skip: List[str] = ['.git'] ) -> Dirs:
-                
-        child_Dirs = self.DIR_CLASS()
-        child_Dirs._add( self )
-
-        Dirs_under = self.list_contents_Paths( block_dirs = False, block_paths = True )
-        for Dir_inst in Dirs_under:
-            if Dir_inst.dirs[-1] not in folders_to_skip:
-                
-                child_Dirs.merge( Dir_inst.get_child_Dirs( folders_to_skip = folders_to_skip ) )
-
-        return child_Dirs
-
     def get_unique_Path( self, filename: str ) -> str:
 
         """finds a unique Path for the proposed filename based on the contents of the Directory
@@ -529,7 +556,6 @@ class Path( Dir ):
 
     """
     Inherits from the Dir class found in Dir.py
-    absolute_path example: C:/Users/e150445/Documents/MO-EE/Data/Raw/experian.parquet
     Path (uppercase P) is a Path class, path (lowercase P) is a string with file absolute path
     """
 
@@ -589,33 +615,18 @@ class Path( Dir ):
     def exists_path( path: str, **kwargs ) -> bool:
         return os.path.exists( path )
 
-    @inherited_instance_method
-    def copy( self, *args, **kwargs ):
-        pass
-    
     @staticmethod
-    def copy_path( source_path: str, destination_Path = None, destination_path: str = '', print_off: bool = True ) -> bool:
+    def copy_path( path: str, destination_path: str ) -> bool:
 
         """copies an the contents from source to destination"""
 
-        if destination_Path != None:
-            destination_Path.create_parents()
-            destination_path = destination_Path.path
-
-        if print_off:
-            print ('Copy Location: ' + source_path)
-            print ('Paste Location: ' + destination_path)
-            print ('copying file...')
-
-        if Path.exists_path(source_path) and not Path.exists_path(destination_path):
+        if Path.exists_path(path) and not Path.exists_path(destination_path):
             try:
-                shutil.copyfile(source_path, destination_path)
+                shutil.copyfile(path, destination_path)
             except:
                 return False
             return True
-
-        else:        
-            return False
+        return False
 
     @remove_wrap
     @inherited_instance_method
@@ -623,7 +634,7 @@ class Path( Dir ):
         pass
 
     @staticmethod
-    def remove_path(path: str) -> bool:
+    def remove_path(path: str, *args, **kwargs) -> bool:
 
         """deletes file at path: BE CAREFUL"""
 
@@ -659,18 +670,6 @@ class Path( Dir ):
         else:
             return False
 
-    @get_size_wrap
-    @inherited_instance_method
-    def get_size( self, *args, **kwargs ):
-        pass
-
-    @staticmethod
-    def get_size_path( path: str, *args, **kwargs ):
-
-        size = os.stat( path ).st_size
-        converted_size, conversion = convert_bytes( size, **kwargs )
-        return converted_size, conversion
-
     @staticmethod
     def get_size_path( path, *args, **kwargs ) -> Tuple[ float, str ]:
 
@@ -688,9 +687,6 @@ class Path( Dir ):
         mtime = pathlib.Path(path).stat().st_mtime
         dt = datetime.datetime.fromtimestamp( mtime )
         return dt
-
-    def get_mtime_path( self, *args, **kwargs ):
-        pass
 
     @inherited_instance_method
     def write( self, *args, **kwargs):
