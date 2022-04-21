@@ -159,12 +159,45 @@ def join_env_var_paths( paths: List[str] ) -> str:
     """ returns 'C:/Path1;C:/Path2' """
     return get_env_var_path_delim().join( paths )
 
+def remove_wrap( method ):
+
+    @functools.wraps( method )
+    def wrapper( self, *args, override: bool = False, print_off: bool = False, **kwargs ):
+        
+        if not override:
+            override = ps.confirm_raw( string = 'This operation will delete ' + str(self) )
+        
+        if override:
+            if print_off:
+                print ('Deleting ' + str(self) + '...')
+
+            if method( self, *args, **kwargs ):
+                return True
+            else:
+                print ('Could not delete ' + str(self))
+
+        return False
+
+    return wrapper
+
+def get_size_wrap( method ):
+
+    @functools.wraps( method )
+    def wrapper( self, *args, **kwargs ):
+        size, size_units = method( self, *args, **kwargs )
+        self.size = size
+        self.size_units = size_units
+
+        return size, size_units
+
+    return wrapper
 
 
-def instance_method(method):
+def dir_ops_instance_method(method):
 
     """instance methods call the corresponding staticmethod 
-    Example: Dir_instance.exists(*,**) calls Dir.exists_dir( Dir_instance.path,*,** )   """
+    Example: Dir_instance.exists(*,**) calls Dir.exists_dir( Dir_instance.path,*,** )   
+    """
 
     @functools.wraps(method)
     def wrapper( self, *called_args, **called_kwargs):
@@ -174,19 +207,36 @@ def instance_method(method):
         
     return wrapper
 
+def inherited_instance_method(method):
+
+    """instance methods call the corresponding staticmethod 
+    Example: Dir_instance.exists(*,**) calls Dir.exists_dir( Dir_instance.path,*,** )   """
+
+    @functools.wraps(method)
+    def wrapper( self, *called_args, **called_kwargs):
+
+        new_method_name = method.__name__ + self.STATIC_METHOD_SUFFIX
+        instance_args = [ self.get_attr( attr ) for attr in self.INSTANCE_METHOD_ATTS ]
+
+        return self.get_attr( new_method_name )( *instance_args, *called_args, **called_kwargs )
+      
+    return wrapper
+
 
 class Dir (ParentClass) :
 
     STATIC_METHOD_SUFFIX = '_dir'
+    INSTANCE_METHOD_ATTS = ['path']
 
     def __init__ ( self, *args, **kwargs ):
 
         ParentClass.__init__( self )
         self.dir_construct( *args, **kwargs )
 
-        self.PATHS_CLASS = Paths
         self.DIR_CLASS = Dir
-
+        self.PATH_CLASS = Path
+        self.DIRS_CLASS = Dirs
+        self.PATHS_CLASS = Paths
 
     def __eq__( self, other_Dir ):
 
@@ -236,7 +286,7 @@ class Dir (ParentClass) :
         dirs = path_to_dirs( dir )
         return join( *dirs[:-1*levels_to_ascend] )
 
-    @instance_method
+    @dir_ops_instance_method
     def join( self, *args, **kwargs ):
         pass
     
@@ -258,7 +308,7 @@ class Dir (ParentClass) :
 
         return Path( self.join( other_Path.path ) )
 
-    @instance_method
+    @inherited_instance_method
     def open( self, *args, **kwargs ):
         pass
     
@@ -273,37 +323,30 @@ class Dir (ParentClass) :
         elif platform.system() == 'Darwin':
             subprocess.call(['open', dir])
 
-    @instance_method
+    @inherited_instance_method
     def exists( self, *args, **kwargs ):
         pass
 
     @staticmethod
-    def exists_dir( path: str, **kwargs ) -> bool:
+    def exists_dir( path: str, *args, **kwargs ) -> bool:
         return os.path.exists( path )
 
-    @instance_method
-    def remove(self, *args, **kwargs):
+    @remove_wrap
+    @inherited_instance_method
+    def remove(self, *args, **kwargs) -> bool:
         pass
-
+    
     @staticmethod
-    def remove_dir( dir: str, override: bool = False, print_off: bool = True) -> bool:
+    def remove_dir( path: str, *args, **kwargs ) -> bool:
 
         """deletes the entire folder and all contents underneath, returns True is successful"""
 
-        if not override:
-            override = input('To delete folder ' + str(dir) + ' type "delete" :') == 'delete'
+        try:
+            shutil.rmtree(path)
+        except:
+            return False
 
-        if override:
-            if print_off:
-                print ('Deleting folder ' + str(dir) + '...')
-
-            try:
-                shutil.rmtree(dir)
-            except:
-                print ('Could not delete folder ' + str(dir))
-                return False
-
-            return True
+        return True
 
     def create(self, *args, **kwargs) -> bool:
 
@@ -330,7 +373,7 @@ class Dir (ParentClass) :
             parent_Dir.create_parents()
             parent_Dir.create()
 
-    @instance_method
+    @inherited_instance_method
     def copy(self, *args, **kwargs):
         pass
 
@@ -353,7 +396,7 @@ class Dir (ParentClass) :
             return False
         return True
 
-    @instance_method
+    @inherited_instance_method
     def list_contents( self, *args, **kwargs ):
         pass
 
@@ -491,10 +534,16 @@ class Path( Dir ):
     """
 
     STATIC_METHOD_SUFFIX = '_path'
+    INSTANCE_METHOD_ATTS = ['path']
 
     def __init__( self, absolute_path ):
 
         self.path_construct(absolute_path)
+
+        self.DIR_CLASS = Dir
+        self.PATH_CLASS = Path
+        self.DIRS_CLASS = Dirs
+        self.PATHS_CLASS = Paths
 
     def path_construct(self, absolute_path):
 
@@ -532,7 +581,7 @@ class Path( Dir ):
 
         return self._print_imp_atts_helper( atts = ['path','dirs','ending','size'], print_off = print_off )
 
-    @instance_method
+    @inherited_instance_method
     def exists( self, *args, **kwargs ):
         pass
 
@@ -540,7 +589,7 @@ class Path( Dir ):
     def exists_path( path: str, **kwargs ) -> bool:
         return os.path.exists( path )
 
-    @instance_method
+    @inherited_instance_method
     def copy( self, *args, **kwargs ):
         pass
     
@@ -568,31 +617,23 @@ class Path( Dir ):
         else:        
             return False
 
-    @instance_method
+    @remove_wrap
+    @inherited_instance_method
     def remove( self, *args, **kwargs ):
         pass
 
     @staticmethod
-    def remove_path(path: str, override: bool = False, print_off: bool = True) -> bool:
+    def remove_path(path: str) -> bool:
 
         """deletes file at path: BE CAREFUL"""
 
-        inp = 'delete'
-        if not override:
-            inp = input('Type "delete" to delete ' + str(path) + ': ')
+        try:
+            os.remove(path)
+        except:
+            return False
+        return True
 
-        if inp == 'delete':
-            if Path.exists_path(path):
-                if print_off:
-                    print ('Deleting file ' + str(path))
-                try:
-                    os.remove(path)
-                except:
-                    return False
-                return True
-        return False
-
-    @instance_method
+    @inherited_instance_method
     def rename( self, *args, **kwargs):
         pass
     
@@ -618,13 +659,17 @@ class Path( Dir ):
         else:
             return False
 
-    def get_size( self, *args, **kwargs ) -> None:
+    @get_size_wrap
+    @inherited_instance_method
+    def get_size( self, *args, **kwargs ):
+        pass
 
-        """get the size of the path"""
+    @staticmethod
+    def get_size_path( path: str, *args, **kwargs ):
 
-        converted_size, conversion = self.get_size_path( self, **kwargs )
-        self.size = converted_size
-        self.size_units = conversion
+        size = os.stat( path ).st_size
+        converted_size, conversion = convert_bytes( size, **kwargs )
+        return converted_size, conversion
 
     @staticmethod
     def get_size_path( path, *args, **kwargs ) -> Tuple[ float, str ]:
@@ -644,7 +689,10 @@ class Path( Dir ):
         dt = datetime.datetime.fromtimestamp( mtime )
         return dt
 
-    @instance_method
+    def get_mtime_path( self, *args, **kwargs ):
+        pass
+
+    @inherited_instance_method
     def write( self, *args, **kwargs):
         pass
        
@@ -654,7 +702,7 @@ class Path( Dir ):
         """writes to a text file at path, read py_starter.write_text_file() for kwargs """
         ps.write_text_file( path, **kwargs )
 
-    @instance_method
+    @inherited_instance_method
     def create( self, *args, **kwargs ):
         pass
     
@@ -664,7 +712,7 @@ class Path( Dir ):
         """initialize the contents of the path"""
         Path.write_path( path, string = string, **kwargs )
 
-    @instance_method
+    @inherited_instance_method
     def read( self, *args, **kwargs):
         pass
     
@@ -674,7 +722,7 @@ class Path( Dir ):
         """reads from a text file at path, read py_starter.read_text_file() for kwargs """
         return ps.read_text_file( path, **kwargs )
 
-    @instance_method
+    @inherited_instance_method
     def import_module( self, *args, **kwargs):
         pass
     
@@ -684,7 +732,7 @@ class Path( Dir ):
         """imports the contents of path as a module"""
         return ps.import_module_from_path( path, **kwargs )
 
-    @instance_method
+    @inherited_instance_method
     def smart_format( self, *args, **kwargs) -> str:
         pass
 
@@ -746,6 +794,9 @@ class Path( Dir ):
 
 class Dirs(ParentClass):
 
+    STATIC_METHOD_SUFFIX = '_dirs'
+    INSTANCE_METHOD_ATTS = ['path']
+
     def __init__ ( self, Dirs = [], dirs = [] ):
 
         ParentClass.__init__( self )
@@ -758,6 +809,9 @@ class Dirs(ParentClass):
         for d in dirs:
             self._add( Dir( d ) )
 
+        self.DIR_CLASS = Dir
+        self.PATH_CLASS = Path
+        self.DIRS_CLASS = Dirs
         self.PATHS_CLASS = Paths
 
     @staticmethod
@@ -847,6 +901,9 @@ class Dirs(ParentClass):
 
 class Paths( Dirs ):
 
+    STATIC_METHOD_SUFFIX = '_paths'
+    INSTANCE_METHOD_ATTS = ['path']
+
     def __init__ ( self, Paths = [], paths = [] ):
 
         ParentClass.__init__( self )
@@ -859,6 +916,9 @@ class Paths( Dirs ):
         for p in paths:
             self._add( Path( p ) )
 
+        self.DIR_CLASS = Dir
+        self.PATH_CLASS = Path
+        self.DIRS_CLASS = Dirs
         self.PATHS_CLASS = Paths
 
     @staticmethod
