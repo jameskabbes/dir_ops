@@ -424,7 +424,7 @@ class Dir (ParentClass) :
         pass
 
     @staticmethod
-    def copy_dir( dir: str, destination: str = '') -> bool:
+    def copy_dir( dir: str, *args, destination: str = '', **kwargs) -> bool:
 
         try:
             shutil.copytree( dir, destination )
@@ -612,11 +612,11 @@ class Path( Dir ):
         pass
 
     @staticmethod
-    def exists_path( path: str, **kwargs ) -> bool:
+    def exists_path( path: str, *args, **kwargs ) -> bool:
         return os.path.exists( path )
 
     @staticmethod
-    def copy_path( path: str, destination: str = '' ) -> bool:
+    def copy_path( path: str, *args, destination: str = '', **kwargs ) -> bool:
 
         """copies an the contents from source to destination"""
 
