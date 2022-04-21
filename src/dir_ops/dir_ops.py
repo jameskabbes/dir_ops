@@ -616,13 +616,13 @@ class Path( Dir ):
         return os.path.exists( path )
 
     @staticmethod
-    def copy_path( path: str, destination_path: str ) -> bool:
+    def copy_path( path: str, destination: str = '' ) -> bool:
 
         """copies an the contents from source to destination"""
 
-        if Path.exists_path(path) and not Path.exists_path(destination_path):
+        if Path.exists_path(path) and not Path.exists_path(destination):
             try:
-                shutil.copyfile(path, destination_path)
+                shutil.copyfile(path, destination)
             except:
                 return False
             return True
