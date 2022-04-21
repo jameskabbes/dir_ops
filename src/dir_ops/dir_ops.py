@@ -194,6 +194,8 @@ def copy_wrap( method ):
 
             if method( self, *args, destination = Destination.path, override=override, print_off=print_off, **kwargs ):
                 return True
+            else:
+                print ('ERROR: Could not copy')
 
         return False
 
