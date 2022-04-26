@@ -81,7 +81,7 @@ def to_from_wrapper_factory( method, action_str, self, *args, override: bool = F
         if action_str == 'download' or action_str == 'copy' or action_str == 'rename':
             if self.exists() and Destination.exists():
                 if not overwrite:
-                    print ('ERROR: Destination already exists. Pass "overwrite=True" to overwrite existing file.')
+                    print ('ERROR: Destination ' +str(Destination)+ ' already exists. Pass "overwrite=True" to overwrite existing file.')
                     return False
                 else:
                     Destination.remove()
