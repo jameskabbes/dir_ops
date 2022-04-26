@@ -89,8 +89,8 @@ class BaseDir( ParentClass ):
     def join_Dir( self, Dir_inst: BaseDir = None, path: str = '' ) -> BaseDir:
         
         if Dir_inst != None:
-            dir = Dir_inst.path
-        return self.DIR_CLASS( path = self.join( dir ), **self.inherited_kwargs )
+            path = Dir_inst.path
+        return self.DIR_CLASS( path = self.join( path ), **self.inherited_kwargs )
 
     def join_Path( self, Path_inst: BasePath = None, path: str = '' ) -> BasePath:
 
