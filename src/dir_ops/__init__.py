@@ -1,4 +1,4 @@
-DEBUG = True
+DEBUG = False
 
 from .support_functions import *
 from .decorators import *
