@@ -57,7 +57,7 @@ class Dir ( do.BaseDir ) :
         contents = os.listdir( dir )
 
         for i in range(len(contents)-1,-1,-1):
-            if not os.path.isfile( contents[i] ):
+            if not os.path.isfile( dir + '/' + contents[i] ):
                 del contents[i]
 
         return contents
@@ -68,7 +68,7 @@ class Dir ( do.BaseDir ) :
         contents = os.listdir( dir )
 
         for i in range(len(contents)-1,-1,-1):
-            if not os.path.isdir( contents[i] ):
+            if not os.path.isdir( dir + '/' + contents[i] ):
                 del contents[i]
 
         return contents
