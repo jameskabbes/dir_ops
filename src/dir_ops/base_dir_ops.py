@@ -415,7 +415,6 @@ class BasePath( BaseDir ):
     def write_path( *args, **kwargs ) -> bool:
         assert False
 
-    @do.inherited_instance_method
     def smart_format( self, *args, formatting_dict, write = True, **kwargs) -> str:
 
         string = self.read()
