@@ -86,16 +86,16 @@ class BaseDir( ParentClass ):
         else:
             return do.join( *other_dirs )
 
-    def join_Dir( self, Dir_inst: BaseDir = None, path: str = '' ) -> BaseDir:
+    def join_Dir( self, Dir: BaseDir = None, path: str = '' ) -> BaseDir:
         
-        if Dir_inst != None:
-            path = Dir_inst.path
+        if Dir != None:
+            path = Dir.path
         return self.DIR_CLASS( path = self.join( path ), **self.inherited_kwargs )
 
-    def join_Path( self, Path_inst: BasePath = None, path: str = '' ) -> BasePath:
+    def join_Path( self, Path: BasePath = None, path: str = '' ) -> BasePath:
 
-        if Path_inst != None:
-            path = Path_inst.path
+        if Path != None:
+            path = Path.path
 
         return self.PATH_CLASS( path = self.join( path ), **self.inherited_kwargs )
 
@@ -479,7 +479,7 @@ class BaseDirs( ParentClass ):
 
     inherited_kwargs = {}
 
-    def __init__( self, *args, given_Dirs = [], given_Paths = [] ):
+    def __init__( self, *args, given_Dirs = [], given_Paths = [], **kwargs ):
 
         ParentClass.__init__( self )
         self.DIR_CLASS = BaseDir
