@@ -1,4 +1,10 @@
-from .dir_ops import *
+DEBUG = False
+
+from .support_functions import *
+from .decorators import *
+from .base_dir_ops import *
+from .local_dir_ops import *
+from .remote_dir_ops import *
 import os
 
 _Dir = Dir( os.path.abspath( __file__ ) ).ascend()   #Dir that contains the package 
