@@ -173,7 +173,7 @@ class BaseDir( ParentClass ):
 
     ##################
 
-    def list_contents( self, *args, print_off: bool = True, **kwargs ):
+    def list_contents( self, *args, print_off: bool = False, **kwargs ):
 
         filenames = []
         filenames.extend( self.list_subfolders() )
