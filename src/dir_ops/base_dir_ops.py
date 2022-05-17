@@ -1,6 +1,8 @@
 from __future__ import annotations
+
 import dir_ops as do
 from parent_class import ParentClass
+from parent_class import ParentPluralList
 
 import datetime
 from typing import List, Any, Tuple
@@ -475,20 +477,19 @@ class BasePath( BaseDir ):
 
 
 
-class BaseDirs( ParentClass ):
+class BaseDirs( ParentPluralList ):
 
     inherited_kwargs = {}
 
     def __init__( self, *args, given_Dirs = [], given_Paths = [], **kwargs ):
 
-        ParentClass.__init__( self )
+        ParentPluralList.__init__( self, att = 'Objs' )
         self.DIR_CLASS = BaseDir
         self.PATH_CLASS = BasePath
         self.DIRS_CLASS = BaseDirs
         self.PATHS_CLASS = BasePaths
 
-        self.Dirs = []
-        self.Objs = self.Dirs # Make an Alias
+        self.Dirs = self.Objs # Make an Alias
 
         for D in given_Dirs:
             self._add( D )
@@ -505,55 +506,6 @@ class BaseDirs( ParentClass ):
 
         """returns boolean if Object is a Dir"""
         return isinstance( Object, BaseDirs )
-
-    def __len__( self ):
-
-        return len( self.Objs )
-
-    def __iter__( self ):
-
-        self.i = -1
-        return self
-
-    def __next__( self ):
-
-        self.i += 1
-
-        if self.i < len(self):
-            return self.Objs[self.i]
-        else:
-            raise StopIteration
-
-    def __contains__( self, Obj_to_check: Any ) -> bool:
-
-        """returns the boolean value for Dir/Path Obj being contained in the list of Objects"""
-
-        for Obj in self:
-            if Obj == Obj_to_check:
-                return True
-        return False
-
-    def _add( self, new_Obj: Any ) -> None:
-
-        """add a new Object to the list of Objects"""
-
-        self.Objs.append( new_Obj )
-
-    def print_imp_atts( self, print_off = True ):
-
-        string = self._print_imp_atts_helper( print_off = False ) + '\n'
-        string += 'Dirs:\n'
-
-        for D in self:
-            string += D.print_one_line_atts( print_off = False ) + '\n'
-
-        string = string [:-1]
-        return self.print_string( string, print_off = print_off )
-
-    def print_one_line_atts(self, print_off = True, leading_string = '\t' ):
-
-        self.len_Dirs = len(self)
-        return self._print_one_line_atts_helper( atts = ['type','len_Dirs'], print_off = print_off, leading_string = leading_string )
 
     def join_Dir( self, Dir_inst: BaseDir ) -> BasePaths:
 
@@ -597,10 +549,9 @@ class BasePaths( BaseDirs ):
 
     def __init__ ( self, *args, **kwargs ):
 
-        self.Paths = []
-        self.Objs = self.Paths # Make an Alias
-
         BaseDirs.__init__( self, **kwargs )
+        self.Paths = self.Objs # Make an Alias
+
         self.DIR_CLASS = BaseDir
         self.PATH_CLASS = BasePath
         self.DIRS_CLASS = BaseDirs
@@ -616,23 +567,6 @@ class BasePaths( BaseDirs ):
 
         """returns boolean if Object is a Dir"""
         return isinstance( Object, BasePaths )
-
-    def print_imp_atts( self, print_off = True ):
-
-        string = self._print_imp_atts_helper( print_off = False ) + '\n'
-        string += 'Paths:\n'
-
-        for P in self:
-            string += P.print_one_line_atts( print_off = False ) + '\n'
-
-        string = string [:-1]
-        return self.print_string( string, print_off = print_off )
-
-    def print_one_line_atts(self, print_off = True, leading_string = '\t' ):
-
-        self.len_Paths = len(self)
-        return self._print_one_line_atts_helper( atts = ['type','len_Paths'], print_off = print_off, leading_string = leading_string )
-
 
     def get_rels( self, Dir_inst ) -> BasePaths:
 
