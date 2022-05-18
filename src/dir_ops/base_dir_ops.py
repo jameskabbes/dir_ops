@@ -235,20 +235,20 @@ class BaseDir( ParentClass ):
     
     ##################
 
-    def list_contents_Paths( self, block_dirs: bool = True, block_paths: bool = False ) -> BasePaths:
+    def list_contents_Paths( self, block_dirs: bool = True, block_paths: bool = False, **kwargs ) -> BasePaths:
 
         Paths_inst = self.PATHS_CLASS( **self.inherited_kwargs )
 
         # 1. Add all files
         if not block_paths:
-            paths = self.list_files()
+            paths = self.list_files( **kwargs )
 
             for path in paths:
                 Paths_inst._add( self.join_Path( path = path ) )
 
         # 2. Add all dirs
         if not block_dirs:
-            dirs = self.list_subfolders()
+            dirs = self.list_subfolders( **kwargs )
 
             for dir in dirs:
                 Paths_inst._add( self.join_Dir( path = dir ) )
@@ -256,14 +256,14 @@ class BaseDir( ParentClass ):
         return Paths_inst
 
 
-    def walk( self, folders_to_skip: List[str] = ['.git'] ) -> BasePaths:
+    def walk( self, folders_to_skip: List[str] = ['.git'], **kwargs ) -> BasePaths:
 
         """Walk through all the contents of the directory"""
 
         Paths_inst = self.PATHS_CLASS( **self.inherited_kwargs )
         Paths_inst._add( self )
 
-        Paths_under = self.list_contents_Paths( block_dirs = False, block_paths = False )
+        Paths_under = self.list_contents_Paths( block_dirs = False, block_paths = False, **kwargs )
 
         for Path_inst in Paths_under:
 
@@ -274,15 +274,15 @@ class BaseDir( ParentClass ):
             elif Path_inst.type_dir:
                 
                 if Path_inst.dirs[-1] not in folders_to_skip:
-                    Paths_inst.merge( Path_inst.walk( folders_to_skip = folders_to_skip ) )
+                    Paths_inst.merge( Path_inst.walk( folders_to_skip = folders_to_skip, **kwargs ) )
 
         return Paths_inst
 
-    def walk_contents_Paths( self, block_dirs: bool = True, block_paths: bool = False, folders_to_skip: List[str] = ['.git'] ) -> BasePaths:
+    def walk_contents_Paths( self, block_dirs: bool = True, block_paths: bool = False, folders_to_skip: List[str] = ['.git'], **kwargs ) -> BasePaths:
 
         """get all Paths and/or Dirs underneath the entire directory, optional params for returning paths and/or dirs"""
 
-        Paths_inst = self.walk( folders_to_skip=folders_to_skip )
+        Paths_inst = self.walk( folders_to_skip=folders_to_skip, **kwargs )
         keep_Paths = self.PATHS_CLASS( **self.inherited_kwargs )
 
         for Path_inst in Paths_inst:
@@ -294,13 +294,13 @@ class BaseDir( ParentClass ):
 
         return keep_Paths
 
-    def get_unique_Path( self, filename: str ) -> str:
+    def get_unique_Path( self, filename: str, **list_contents_Paths_kwargs ) -> str:
 
         """finds a unique Path for the proposed filename based on the contents of the Directory
         if file.txt already exists in the dir, return file1.txt or file2.txt, etc  """
 
         # 
-        Paths_in_Dir = self.list_contents_Paths( block_dirs=True, block_paths=False )
+        Paths_in_Dir = self.list_contents_Paths( block_dirs=True, block_paths=False, **list_contents_Paths_kwargs )
         filenames = [ P.filename for P in Paths_in_Dir ]
 
         filename_Path = self.join_Path( path = filename )
