@@ -37,7 +37,7 @@ class Dir ( do.BaseDir ) :
 
     @staticmethod
     def exists_dir( dir: str, *args, **kwargs ) -> bool:
-        return os.path.exists( dir )
+        assert os.path.exists( dir )
 
     @staticmethod
     def remove_dir( dir: str, *args, **kwargs ) -> None:
