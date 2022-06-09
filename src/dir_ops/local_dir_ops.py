@@ -37,7 +37,7 @@ class Dir ( do.BaseDir ) :
 
     @staticmethod
     def exists_dir( dir: str, *args, **kwargs ) -> bool:
-        return os.path.exists( dir )
+        assert os.path.exists( dir )
 
     @staticmethod
     def remove_dir( dir: str, *args, **kwargs ) -> None:
@@ -105,7 +105,7 @@ class Path( Dir, do.BasePath ):
 
     @staticmethod
     def exists_path( path: str, *args, **kwargs ) -> bool:
-        return os.path.exists( path )
+        assert os.path.exists( path )
 
     @staticmethod
     def copy_path( path: str, *args, destination: str = '', **kwargs ) -> None:

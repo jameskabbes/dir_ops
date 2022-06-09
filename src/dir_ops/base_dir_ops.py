@@ -114,6 +114,7 @@ class BaseDir( ParentClass ):
 
     ##################
 
+    @ps.try_operation_wrap( debug = do.DEBUG )
     @do.inherited_instance_method
     def exists( self, *args, **kwargs ) -> bool:
         pass
