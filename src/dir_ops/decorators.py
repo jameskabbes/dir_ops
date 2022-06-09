@@ -84,7 +84,7 @@ def to_from_wrapper_factory( method, action_str, self, *args, override: bool = F
                     print ('ERROR: Destination ' +str(Destination)+ ' already exists. Pass "overwrite=True" to overwrite existing file.')
                     return False
                 else:
-                    Destination.remove()
+                    Destination.remove( override = True )
 
         # perform the actual method        
         do.print_to_from( print_off, action_str, str(self), str(Destination) )
