@@ -230,7 +230,7 @@ class BaseDir( ParentClass ):
     def get_rel_dir( dir, other_dir ) -> str:
         
         if dir != '':
-            return os.path.relpath( dir, other_dir )
+            return do.replace_delims( os.path.relpath( dir, other_dir ) )
         else:
             return other_dir
     
