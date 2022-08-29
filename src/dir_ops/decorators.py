@@ -55,44 +55,52 @@ def dirs_wrap( method_name, track_success = False ):
 
 ###
 
-def to_from_wrapper_factory( method, action_str, self, *args, override: bool = False, print_off: bool = False, 
-                    Destination = None, destination = '', 
-                    overwrite: bool = False,
-                    **kwargs  ):
+def to_from_wrapper_factory( method, action_str, self, *args, **kwargs  ):
 
-    if Destination == None:
+    default_kwargs = {
+
+        'override': False, #bool
+        'print_off': False, #bool
+        'Destination': None, 
+        'destination': '', 
+        'overwrite': False #bool
+    }
+
+    joined_kwargs = ps.merge_dicts( default_kwargs, kwargs )
+
+    if joined_kwargs['Destination'] == None:
         if self.type_path:
-            Destination = do.Path( destination )
+            joined_kwargs['Destination'] = do.Path( joined_kwargs['destination'] )
         if self.type_dir:
-            Destination = do.Dir( destination )
+            joined_kwargs['Destination'] = do.Dir( joined_kwargs['destination'] )
 
 
     ######  Insert special instructions
     if action_str == 'download' or action_str == 'copy' or action_str == 'rename':
-        Destination.create_parents()
+        joined_kwargs['Destination'].create_parents( **joined_kwargs )
     
     ######
-    if not override:
-        do.print_to_from( True, action_str, str(self), str(Destination) )
-        override = ps.confirm_raw( string = '' )
+    if not joined_kwargs['override']:
+        do.print_to_from( True, action_str, str(self), str(joined_kwargs['Destination']) )
+        joined_kwargs['override'] = ps.confirm_raw( string = '' )
 
-    if override:
+    if joined_kwargs['override']:
         ###### Check for conflicting destination locations
         if action_str == 'download' or action_str == 'copy' or action_str == 'rename':
-            if self.exists() and Destination.exists():
-                if not overwrite:
-                    print ('ERROR: Destination ' +str(Destination)+ ' already exists. Pass "overwrite=True" to overwrite existing file.')
+            if self.exists() and joined_kwargs['Destination'].exists():
+                if not joined_kwargs['overwrite']:
+                    print ('ERROR: Destination ' +str(joined_kwargs['Destination'])+ ' already exists. Pass "overwrite=True" to overwrite existing file.')
                     return False
                 else:
-                    Destination.remove( override = True )
+                    joined_kwargs['Destination'].remove( override = True )
 
         # perform the actual method        
-        do.print_to_from( print_off, action_str, str(self), str(Destination) )
+        do.print_to_from( joined_kwargs['print_off'], action_str, str(self), str(joined_kwargs['Destination']) )
 
-        if method( self, *args, destination = Destination.path, override=override, print_off=print_off, **kwargs ):
+        if method( self, *args, destination = joined_kwargs['Destination'].path, override=joined_kwargs['override'], print_off=joined_kwargs['print_off'] ):
             return True
         else:
-            do.print_to_from( True, action_str, str(self), str(Destination) )
+            do.print_to_from( True, action_str, str(self), str(joined_kwargs['Destination']) )
             print ('ERROR: could not complete ' + action_str)
 
     return False
