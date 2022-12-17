@@ -130,6 +130,9 @@ def get_env_var_path_delim() -> str:
         return ';'
     elif platform.system() == 'Linux':
         return ':'
+    elif platform.system() == 'Darwin':
+        return ':'
+    
 
 def split_env_var_paths( string: str ) -> List[str]:
 
