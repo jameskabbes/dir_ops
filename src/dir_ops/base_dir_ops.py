@@ -14,6 +14,8 @@ class BaseDir( ParentClass ):
     STATIC_METHOD_SUFFIX = '_dir'
     INSTANCE_METHOD_ATTS = ['path']
     inherited_kwargs = {}
+    _IMP_ATTS = ['path','dirs']
+    _ONE_LINE_ATTS = ['type','path']
 
     def __init__( self, *args, **kwargs ):
 
@@ -40,14 +42,6 @@ class BaseDir( ParentClass ):
 
         #alias just for quick coding
         self.p = self.path
-
-    def print_imp_atts( self, **kwargs ):
-
-        return self._print_imp_atts_helper( atts = ['path','dirs'], **kwargs )
-
-    def print_one_line_atts(self, **kwargs ):
-
-        return self._print_one_line_atts_helper( atts = ['type','path'], **kwargs )
 
     def __eq__( self, other_Dir ):
 
@@ -321,6 +315,7 @@ class BasePath( BaseDir ):
 
     STATIC_METHOD_SUFFIX = '_path'
     INSTANCE_METHOD_ATTS = ['path']
+    _IMP_ATTS = ['path','dirs','ending','size']
 
     def __init__( self, *args, **kwargs ):
 
@@ -365,10 +360,6 @@ class BasePath( BaseDir ):
 
         """returns boolean if Object is a Dir"""
         return isinstance( Object, BasePath )
-
-    def print_imp_atts(self, print_off = True):
-
-        return self._print_imp_atts_helper( atts = ['path','dirs','ending','size'], print_off = print_off )
 
     @staticmethod
     def exists_path( *args, **kwargs ):
