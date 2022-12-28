@@ -1,6 +1,6 @@
 DEBUG = False
 
-from .support_functions import *
+from .utils import *
 from .decorators import *
 from .base_dir_ops import *
 from .local_dir_ops import *

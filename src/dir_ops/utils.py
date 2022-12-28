@@ -109,6 +109,11 @@ def get_desktop_dir() -> Any:
 
     return None
 
+def get_home_dir():
+
+    if platform.system() == 'Darwin':
+        return os.path.expanduser('~')
+
 def create_shortcut( target_Path, shortcut_Dir ) -> None:
 
     """places a shortcut from target_Path to shortcut_Dir"""
