@@ -1,6 +1,7 @@
 from typing import List, Any, Tuple
 import os
 import platform
+from pathlib import Path
 
 DELIM = '/'
 SECONDARY_DELIM = '\\'
@@ -111,8 +112,7 @@ def get_desktop_dir() -> Any:
 
 def get_home_dir():
 
-    if platform.system() == 'Darwin':
-        return os.path.expanduser('~')
+    return str(Path.home())    
 
 def create_shortcut( target_Path, shortcut_Dir ) -> None:
 
