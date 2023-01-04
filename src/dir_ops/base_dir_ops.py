@@ -43,11 +43,18 @@ class BaseDir( ParentClass ):
         #alias just for quick coding
         self.p = self.path
 
+    def __str__( self ):
+        return self.path
+
     def __eq__( self, other_Dir ):
 
         if isinstance( other_Dir, self.DIR_CLASS ):
             return self.path == other_Dir.path
         return False
+
+    def construct( self, type, *args, **kwargs ):
+
+        return self.get_attr( type.upper() + '_CLASS' )( *args, **kwargs )
 
     @staticmethod
     def is_Dir( Object: Any ) -> bool:
@@ -68,6 +75,14 @@ class BaseDir( ParentClass ):
 
         dirs = do.path_to_dirs( dir )
         return do.join( *dirs[:-1*levels_to_ascend] )
+
+    @do.base_instance_method
+    def lowest( self ):
+        pass
+
+    @staticmethod        
+    def lowest_dir( dir: str ):
+        return do.path_to_dirs( dir )[-1]
 
     @do.base_instance_method
     def join( self, *args, **kwargs ):
@@ -399,6 +414,14 @@ class BasePath( BaseDir ):
     @staticmethod
     def read_path( path, **kwargs ) -> Any:
         return None
+
+    @do.inherited_instance_method
+    def read_json_to_dict( self, *args, **kwargs):
+        pass
+
+    @staticmethod
+    def read_json_to_dict_path( path, **kwargs ) -> Any:
+        return ps.json_to_dict( ps.read_text_file( path, **kwargs ) )
 
     @ps.try_operation_wrap( debug = do.DEBUG )
     @do.inherited_instance_method
