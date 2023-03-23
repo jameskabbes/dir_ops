@@ -319,9 +319,9 @@ class BaseDir( ParentClass ):
         
         counter = 0
         while True:
-            proposed_filename = filename_Path.root + str(counter) + filename_Path.extension
+            proposed_filename = filename_Path.root + '-' +  str(counter) + filename_Path.extension
             if proposed_filename not in filenames:
-                return self.join( path = proposed_filename )
+                return self.join_Path( path = proposed_filename )
 
             counter += 1
 
