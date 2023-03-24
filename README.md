@@ -1,8 +1,9 @@
-[GitHub Pages](https://jameskabbes.github.io/dir_ops)<br>
-[PyPI](https://pypi.org/project/kabbes-dir_ops)
 
 # dir_ops
 Handy directory operations along with homemade Dir/Path classes
+
+[Documentation](https://jameskabbes.github.io/dir_ops)<br>
+[PyPI](https://pypi.org/project/kabbes-dir_ops)
 
 <br> 
 
