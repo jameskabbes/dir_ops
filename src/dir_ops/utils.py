@@ -1,6 +1,7 @@
 from typing import List, Any, Tuple
 import os
 import platform
+from pathlib import Path
 
 DELIM = '/'
 SECONDARY_DELIM = '\\'
@@ -109,6 +110,10 @@ def get_desktop_dir() -> Any:
 
     return None
 
+def get_home_dir():
+
+    return str(Path.home())    
+
 def create_shortcut( target_Path, shortcut_Dir ) -> None:
 
     """places a shortcut from target_Path to shortcut_Dir"""
@@ -130,6 +135,9 @@ def get_env_var_path_delim() -> str:
         return ';'
     elif platform.system() == 'Linux':
         return ':'
+    elif platform.system() == 'Darwin':
+        return ':'
+    
 
 def split_env_var_paths( string: str ) -> List[str]:
 

@@ -14,6 +14,8 @@ class BaseDir( ParentClass ):
     STATIC_METHOD_SUFFIX = '_dir'
     INSTANCE_METHOD_ATTS = ['path']
     inherited_kwargs = {}
+    _IMP_ATTS = ['path','dirs']
+    _ONE_LINE_ATTS = ['type','path']
 
     def __init__( self, *args, **kwargs ):
 
@@ -41,19 +43,18 @@ class BaseDir( ParentClass ):
         #alias just for quick coding
         self.p = self.path
 
-    def print_imp_atts( self, **kwargs ):
-
-        return self._print_imp_atts_helper( atts = ['path','dirs'], **kwargs )
-
-    def print_one_line_atts(self, **kwargs ):
-
-        return self._print_one_line_atts_helper( atts = ['type','path'], **kwargs )
+    def __str__( self ):
+        return self.path
 
     def __eq__( self, other_Dir ):
 
         if isinstance( other_Dir, self.DIR_CLASS ):
             return self.path == other_Dir.path
         return False
+
+    def construct( self, type, *args, **kwargs ):
+
+        return self.get_attr( type.upper() + '_CLASS' )( *args, **kwargs )
 
     @staticmethod
     def is_Dir( Object: Any ) -> bool:
@@ -74,6 +75,14 @@ class BaseDir( ParentClass ):
 
         dirs = do.path_to_dirs( dir )
         return do.join( *dirs[:-1*levels_to_ascend] )
+
+    @do.base_instance_method
+    def lowest( self ):
+        pass
+
+    @staticmethod        
+    def lowest_dir( dir: str ):
+        return do.path_to_dirs( dir )[-1]
 
     @do.base_instance_method
     def join( self, *args, **kwargs ):
@@ -230,7 +239,7 @@ class BaseDir( ParentClass ):
     def get_rel_dir( dir, other_dir ) -> str:
         
         if dir != '':
-            return os.path.relpath( dir, other_dir )
+            return do.replace_delims( os.path.relpath( dir, other_dir ) )
         else:
             return other_dir
     
@@ -310,9 +319,9 @@ class BaseDir( ParentClass ):
         
         counter = 0
         while True:
-            proposed_filename = filename_Path.root + str(counter) + filename_Path.extension
+            proposed_filename = filename_Path.root + '-' +  str(counter) + filename_Path.extension
             if proposed_filename not in filenames:
-                return self.join( path = proposed_filename )
+                return self.join_Path( path = proposed_filename )
 
             counter += 1
 
@@ -321,6 +330,7 @@ class BasePath( BaseDir ):
 
     STATIC_METHOD_SUFFIX = '_path'
     INSTANCE_METHOD_ATTS = ['path']
+    _IMP_ATTS = ['path','dirs','ending','size']
 
     def __init__( self, *args, **kwargs ):
 
@@ -366,10 +376,6 @@ class BasePath( BaseDir ):
         """returns boolean if Object is a Dir"""
         return isinstance( Object, BasePath )
 
-    def print_imp_atts(self, print_off = True):
-
-        return self._print_imp_atts_helper( atts = ['path','dirs','ending','size'], print_off = print_off )
-
     @staticmethod
     def exists_path( *args, **kwargs ):
         return False
@@ -408,6 +414,14 @@ class BasePath( BaseDir ):
     @staticmethod
     def read_path( path, **kwargs ) -> Any:
         return None
+
+    @do.inherited_instance_method
+    def read_json_to_dict( self, *args, **kwargs):
+        pass
+
+    @staticmethod
+    def read_json_to_dict_path( path, **kwargs ) -> Any:
+        return ps.json_to_dict( ps.read_text_file( path, **kwargs ) )
 
     @ps.try_operation_wrap( debug = do.DEBUG )
     @do.inherited_instance_method
