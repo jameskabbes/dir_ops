@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dir_ops package &mdash; kabbes_dir_ops 0.10.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="src" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            kabbes_dir_ops
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">dir_ops package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dir_ops.base_dir_ops">dir_ops.base_dir_ops module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.base_dir_ops.BaseDir"><code class="docutils literal notranslate"><span class="pre">BaseDir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.base_dir_ops.BaseDirs"><code class="docutils literal notranslate"><span class="pre">BaseDirs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.base_dir_ops.BasePath"><code class="docutils literal notranslate"><span class="pre">BasePath</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.base_dir_ops.BasePaths"><code class="docutils literal notranslate"><span class="pre">BasePaths</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dir_ops.decorators">dir_ops.decorators module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.decorators.base_instance_method"><code class="docutils literal notranslate"><span class="pre">base_instance_method()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.decorators.copy_wrap"><code class="docutils literal notranslate"><span class="pre">copy_wrap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.decorators.create_wrap"><code class="docutils literal notranslate"><span class="pre">create_wrap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.decorators.dirs_wrap"><code class="docutils literal notranslate"><span class="pre">dirs_wrap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.decorators.download_wrap"><code class="docutils literal notranslate"><span class="pre">download_wrap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.decorators.get_mtime_wrap"><code class="docutils literal notranslate"><span class="pre">get_mtime_wrap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.decorators.get_size_wrap"><code class="docutils literal notranslate"><span class="pre">get_size_wrap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.decorators.inherited_instance_method"><code class="docutils literal notranslate"><span class="pre">inherited_instance_method()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.decorators.remove_wrap"><code class="docutils literal notranslate"><span class="pre">remove_wrap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.decorators.rename_wrap"><code class="docutils literal notranslate"><span class="pre">rename_wrap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.decorators.to_from_wrapper_factory"><code class="docutils literal notranslate"><span class="pre">to_from_wrapper_factory()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.decorators.upload_wrap"><code class="docutils literal notranslate"><span class="pre">upload_wrap()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dir_ops.local_dir_ops">dir_ops.local_dir_ops module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.local_dir_ops.Dir"><code class="docutils literal notranslate"><span class="pre">Dir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.local_dir_ops.Dirs"><code class="docutils literal notranslate"><span class="pre">Dirs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.local_dir_ops.Path"><code class="docutils literal notranslate"><span class="pre">Path</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.local_dir_ops.Paths"><code class="docutils literal notranslate"><span class="pre">Paths</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dir_ops.remote_dir_ops">dir_ops.remote_dir_ops module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.remote_dir_ops.RemoteDir"><code class="docutils literal notranslate"><span class="pre">RemoteDir</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.remote_dir_ops.RemoteDirs"><code class="docutils literal notranslate"><span class="pre">RemoteDirs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.remote_dir_ops.RemotePath"><code class="docutils literal notranslate"><span class="pre">RemotePath</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.remote_dir_ops.RemotePaths"><code class="docutils literal notranslate"><span class="pre">RemotePaths</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dir_ops.utils">dir_ops.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.add_prefix_to_paths"><code class="docutils literal notranslate"><span class="pre">add_prefix_to_paths()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.convert_bytes"><code class="docutils literal notranslate"><span class="pre">convert_bytes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.create_shortcut"><code class="docutils literal notranslate"><span class="pre">create_shortcut()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.get_cwd"><code class="docutils literal notranslate"><span class="pre">get_cwd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.get_desktop_dir"><code class="docutils literal notranslate"><span class="pre">get_desktop_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.get_env_var_path_delim"><code class="docutils literal notranslate"><span class="pre">get_env_var_path_delim()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.get_home_dir"><code class="docutils literal notranslate"><span class="pre">get_home_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.is_dir"><code class="docutils literal notranslate"><span class="pre">is_dir()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.is_file"><code class="docutils literal notranslate"><span class="pre">is_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.join"><code class="docutils literal notranslate"><span class="pre">join()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.join_env_var_paths"><code class="docutils literal notranslate"><span class="pre">join_env_var_paths()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.path_to_dirs"><code class="docutils literal notranslate"><span class="pre">path_to_dirs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.print_to_from"><code class="docutils literal notranslate"><span class="pre">print_to_from()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.remove_hanging_slashes"><code class="docutils literal notranslate"><span class="pre">remove_hanging_slashes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.remove_prefix_from_paths"><code class="docutils literal notranslate"><span class="pre">remove_prefix_from_paths()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.replace_delims"><code class="docutils literal notranslate"><span class="pre">replace_delims()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dir_ops.utils.split_env_var_paths"><code class="docutils literal notranslate"><span class="pre">split_env_var_paths()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-dir_ops">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">kabbes_dir_ops</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+      <li class="breadcrumb-item active">dir_ops package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/dir_ops.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dir-ops-package">
+<h1>dir_ops package<a class="headerlink" href="#dir-ops-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-dir_ops.base_dir_ops">
+<span id="dir-ops-base-dir-ops-module"></span><h2>dir_ops.base_dir_ops module<a class="headerlink" href="#module-dir_ops.base_dir_ops" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dir_ops.base_dir_ops.</span></span><span class="sig-name descname"><span class="pre">BaseDir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ParentClass</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.INSTANCE_METHOD_ATTS">
+<span class="sig-name descname"><span class="pre">INSTANCE_METHOD_ATTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['path']</span></em><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.INSTANCE_METHOD_ATTS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.STATIC_METHOD_SUFFIX">
+<span class="sig-name descname"><span class="pre">STATIC_METHOD_SUFFIX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'_dir'</span></em><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.STATIC_METHOD_SUFFIX" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.ascend">
+<span class="sig-name descname"><span class="pre">ascend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level_to_ascend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dir_ops.base_dir_ops.BaseDir" title="dir_ops.base_dir_ops.BaseDir"><span class="pre">BaseDir</span></a></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.ascend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.ascend" title="Permalink to this definition"></a></dt>
+<dd><p>go up a x number directories -&gt; “levels_to_ascend”</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.ascend_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ascend_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">levels_to_ascend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.ascend_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.ascend_dir" title="Permalink to this definition"></a></dt>
+<dd><p>go up a x number directories -&gt; “levels_to_ascend”</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.construct">
+<span class="sig-name descname"><span class="pre">construct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">type</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.construct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.construct" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.copy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.copy" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.copy_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">copy_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.copy_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.copy_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.create" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.create_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.create_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.create_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.create_parents">
+<span class="sig-name descname"><span class="pre">create_parents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.create_parents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.create_parents" title="Permalink to this definition"></a></dt>
+<dd><p>use recursion to travel all the way up the parent directories until we find one that exists, then unfold and create each directory</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.dir_construct">
+<span class="sig-name descname"><span class="pre">dir_construct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.dir_construct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.dir_construct" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.exists">
+<span class="sig-name descname"><span class="pre">exists</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.exists"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.exists" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.exists_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exists_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.exists_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.exists_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.get_rel">
+<span class="sig-name descname"><span class="pre">get_rel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_Dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dir_ops.base_dir_ops.BaseDir" title="dir_ops.base_dir_ops.BaseDir"><span class="pre">BaseDir</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dir_ops.base_dir_ops.BaseDir" title="dir_ops.base_dir_ops.BaseDir"><span class="pre">BaseDir</span></a></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.get_rel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.get_rel" title="Permalink to this definition"></a></dt>
+<dd><p>Given a Dir object, find the relative Dir from Dir to self</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.get_rel_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_rel_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other_dir</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.get_rel_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.get_rel_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.get_size">
+<span class="sig-name descname"><span class="pre">get_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.get_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.get_size" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.get_size_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_size_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.get_size_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.get_size_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.get_unique_Path">
+<span class="sig-name descname"><span class="pre">get_unique_Path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">list_contents_Paths_kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.get_unique_Path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.get_unique_Path" title="Permalink to this definition"></a></dt>
+<dd><p>finds a unique Path for the proposed filename based on the contents of the Directory
+if file.txt already exists in the dir, return file1.txt or file2.txt, etc</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.inherited_kwargs">
+<span class="sig-name descname"><span class="pre">inherited_kwargs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.inherited_kwargs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.is_Dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_Dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Object</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.is_Dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.is_Dir" title="Permalink to this definition"></a></dt>
+<dd><p>returns boolean if Object is a Dir</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.join">
+<span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.join"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.join" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.join_Dir">
+<span class="sig-name descname"><span class="pre">join_Dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dir_ops.base_dir_ops.BaseDir" title="dir_ops.base_dir_ops.BaseDir"><span class="pre">BaseDir</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dir_ops.base_dir_ops.BaseDir" title="dir_ops.base_dir_ops.BaseDir"><span class="pre">BaseDir</span></a></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.join_Dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.join_Dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.join_Path">
+<span class="sig-name descname"><span class="pre">join_Path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dir_ops.base_dir_ops.BasePath" title="dir_ops.base_dir_ops.BasePath"><span class="pre">BasePath</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dir_ops.base_dir_ops.BasePath" title="dir_ops.base_dir_ops.BasePath"><span class="pre">BasePath</span></a></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.join_Path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.join_Path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.join_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">join_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">other_dirs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.join_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.join_dir" title="Permalink to this definition"></a></dt>
+<dd><p>add more dirs to the Dir path</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.list_contents">
+<span class="sig-name descname"><span class="pre">list_contents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_off</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.list_contents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.list_contents" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.list_contents_Paths">
+<span class="sig-name descname"><span class="pre">list_contents_Paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block_dirs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dir_ops.base_dir_ops.BasePaths" title="dir_ops.base_dir_ops.BasePaths"><span class="pre">BasePaths</span></a></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.list_contents_Paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.list_contents_Paths" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.list_files">
+<span class="sig-name descname"><span class="pre">list_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.list_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.list_files" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.list_files_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_files_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.list_files_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.list_files_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.list_subfolders">
+<span class="sig-name descname"><span class="pre">list_subfolders</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.list_subfolders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.list_subfolders" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.list_subfolders_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_subfolders_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.list_subfolders_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.list_subfolders_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.lowest">
+<span class="sig-name descname"><span class="pre">lowest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.lowest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.lowest" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.lowest_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lowest_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.lowest_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.lowest_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.open">
+<span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.open"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.open" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.open_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">open_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.open_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.open_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.remove" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.remove_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remove_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.remove_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.remove_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.walk">
+<span class="sig-name descname"><span class="pre">walk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">folders_to_skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['.git']</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dir_ops.base_dir_ops.BasePaths" title="dir_ops.base_dir_ops.BasePaths"><span class="pre">BasePaths</span></a></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.walk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.walk" title="Permalink to this definition"></a></dt>
+<dd><p>Walk through all the contents of the directory</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDir.walk_contents_Paths">
+<span class="sig-name descname"><span class="pre">walk_contents_Paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">block_dirs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">folders_to_skip</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['.git']</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dir_ops.base_dir_ops.BasePaths" title="dir_ops.base_dir_ops.BasePaths"><span class="pre">BasePaths</span></a></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDir.walk_contents_Paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDir.walk_contents_Paths" title="Permalink to this definition"></a></dt>
+<dd><p>get all Paths and/or Dirs underneath the entire directory, optional params for returning paths and/or dirs</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDirs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dir_ops.base_dir_ops.</span></span><span class="sig-name descname"><span class="pre">BaseDirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">given_Dirs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">given_Paths</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDirs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDirs" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ParentPluralList</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDirs.create">
+<span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDirs.create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDirs.create" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDirs.export_strings">
+<span class="sig-name descname"><span class="pre">export_strings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDirs.export_strings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDirs.export_strings" title="Permalink to this definition"></a></dt>
+<dd><p>Returns all the paths of each Dir/Path contained</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDirs.inherited_kwargs">
+<span class="sig-name descname"><span class="pre">inherited_kwargs</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDirs.inherited_kwargs" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDirs.is_Dirs">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_Dirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Object</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDirs.is_Dirs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDirs.is_Dirs" title="Permalink to this definition"></a></dt>
+<dd><p>returns boolean if Object is a Dir</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDirs.join_Dir">
+<span class="sig-name descname"><span class="pre">join_Dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Dir_inst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dir_ops.base_dir_ops.BaseDir" title="dir_ops.base_dir_ops.BaseDir"><span class="pre">BaseDir</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dir_ops.base_dir_ops.BasePaths" title="dir_ops.base_dir_ops.BasePaths"><span class="pre">BasePaths</span></a></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDirs.join_Dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDirs.join_Dir" title="Permalink to this definition"></a></dt>
+<dd><p>Joins Dir_inst to each Dir/Path contained in the Object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDirs.merge">
+<span class="sig-name descname"><span class="pre">merge</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other_Dirs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDirs.merge"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDirs.merge" title="Permalink to this definition"></a></dt>
+<dd><p>add all Dir objects from another Dirs instance to self</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BaseDirs.remove">
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BaseDirs.remove"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BaseDirs.remove" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dir_ops.base_dir_ops.</span></span><span class="sig-name descname"><span class="pre">BasePath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dir_ops.base_dir_ops.BaseDir" title="dir_ops.base_dir_ops.BaseDir"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDir</span></code></a></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.INSTANCE_METHOD_ATTS">
+<span class="sig-name descname"><span class="pre">INSTANCE_METHOD_ATTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['path']</span></em><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.INSTANCE_METHOD_ATTS" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.STATIC_METHOD_SUFFIX">
+<span class="sig-name descname"><span class="pre">STATIC_METHOD_SUFFIX</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'_path'</span></em><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.STATIC_METHOD_SUFFIX" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.create_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.create_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.create_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.exists_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exists_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.exists_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.exists_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.get_ending">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_ending</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.get_ending"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.get_ending" title="Permalink to this definition"></a></dt>
+<dd><p>returns the file ending from a path</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.get_filename">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.get_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.get_filename" title="Permalink to this definition"></a></dt>
+<dd><p>returns the filename (‘file.txt’) from a long path (‘C:/path/to/file.txt’)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.get_mtime">
+<span class="sig-name descname"><span class="pre">get_mtime</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.get_mtime"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.get_mtime" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.get_mtime_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_mtime_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">datetime</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.get_mtime_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.get_mtime_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.get_rel">
+<span class="sig-name descname"><span class="pre">get_rel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Dir_inst</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#dir_ops.base_dir_ops.BaseDir" title="dir_ops.base_dir_ops.BaseDir"><span class="pre">BaseDir</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dir_ops.base_dir_ops.BasePath" title="dir_ops.base_dir_ops.BasePath"><span class="pre">BasePath</span></a></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.get_rel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.get_rel" title="Permalink to this definition"></a></dt>
+<dd><p>Given a Dir object, find the relative Path from Dir to self</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.get_rel_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_rel_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.get_rel_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.get_rel_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.get_root">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_root</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_dots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.get_root"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.get_root" title="Permalink to this definition"></a></dt>
+<dd><p>returns the root of the filename from a path  Dir/a_file1.txt returns “a_file1”</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.is_Path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_Path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Object</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.is_Path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.is_Path" title="Permalink to this definition"></a></dt>
+<dd><p>returns boolean if Object is a Dir</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.path_construct">
+<span class="sig-name descname"><span class="pre">path_construct</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.path_construct"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.path_construct" title="Permalink to this definition"></a></dt>
+<dd><p>Since the Path is different from a Dir, add the extra attiributes</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.read">
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.read"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.read" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.read_json_to_dict">
+<span class="sig-name descname"><span class="pre">read_json_to_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.read_json_to_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.read_json_to_dict" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.read_json_to_dict_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read_json_to_dict_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.read_json_to_dict_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.read_json_to_dict_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.read_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.read_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.read_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.remove_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remove_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.remove_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.remove_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.rename">
+<span class="sig-name descname"><span class="pre">rename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.rename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.rename" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.rename_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rename_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.rename_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.rename_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.smart_format">
+<span class="sig-name descname"><span class="pre">smart_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">formatting_dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">write</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.smart_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.smart_format" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.write">
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.write"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.write" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePath.write_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePath.write_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePath.write_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePaths">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dir_ops.base_dir_ops.</span></span><span class="sig-name descname"><span class="pre">BasePaths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePaths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePaths" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dir_ops.base_dir_ops.BaseDirs" title="dir_ops.base_dir_ops.BaseDirs"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDirs</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePaths.get_rels">
+<span class="sig-name descname"><span class="pre">get_rels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Dir_inst</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dir_ops.base_dir_ops.BasePaths" title="dir_ops.base_dir_ops.BasePaths"><span class="pre">BasePaths</span></a></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePaths.get_rels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePaths.get_rels" title="Permalink to this definition"></a></dt>
+<dd><p>Given a Dir object, find the relative Paths from Dir to the Paths</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.base_dir_ops.BasePaths.is_Paths">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_Paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Object</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/base_dir_ops.html#BasePaths.is_Paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.base_dir_ops.BasePaths.is_Paths" title="Permalink to this definition"></a></dt>
+<dd><p>returns boolean if Object is a Dir</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-dir_ops.decorators">
+<span id="dir-ops-decorators-module"></span><h2>dir_ops.decorators module<a class="headerlink" href="#module-dir_ops.decorators" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.decorators.base_instance_method">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.decorators.</span></span><span class="sig-name descname"><span class="pre">base_instance_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/decorators.html#base_instance_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.decorators.base_instance_method" title="Permalink to this definition"></a></dt>
+<dd><p>instance methods call the corresponding staticmethod 
+Example: Dir_instance.exists(<em>,*</em>) calls Dir.exists_dir( Dir_instance.path,*,** )</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.decorators.copy_wrap">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.decorators.</span></span><span class="sig-name descname"><span class="pre">copy_wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/decorators.html#copy_wrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.decorators.copy_wrap" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.decorators.create_wrap">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.decorators.</span></span><span class="sig-name descname"><span class="pre">create_wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/decorators.html#create_wrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.decorators.create_wrap" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.decorators.dirs_wrap">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.decorators.</span></span><span class="sig-name descname"><span class="pre">dirs_wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">track_success</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/decorators.html#dirs_wrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.decorators.dirs_wrap" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.decorators.download_wrap">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.decorators.</span></span><span class="sig-name descname"><span class="pre">download_wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/decorators.html#download_wrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.decorators.download_wrap" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.decorators.get_mtime_wrap">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.decorators.</span></span><span class="sig-name descname"><span class="pre">get_mtime_wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/decorators.html#get_mtime_wrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.decorators.get_mtime_wrap" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.decorators.get_size_wrap">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.decorators.</span></span><span class="sig-name descname"><span class="pre">get_size_wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/decorators.html#get_size_wrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.decorators.get_size_wrap" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.decorators.inherited_instance_method">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.decorators.</span></span><span class="sig-name descname"><span class="pre">inherited_instance_method</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/decorators.html#inherited_instance_method"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.decorators.inherited_instance_method" title="Permalink to this definition"></a></dt>
+<dd><p>instance methods call the corresponding staticmethod 
+Example: Dir_instance.exists(<em>,*</em>) calls Dir.exists_dir( Dir_instance.path,*,** )</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.decorators.remove_wrap">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.decorators.</span></span><span class="sig-name descname"><span class="pre">remove_wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/decorators.html#remove_wrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.decorators.remove_wrap" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.decorators.rename_wrap">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.decorators.</span></span><span class="sig-name descname"><span class="pre">rename_wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/decorators.html#rename_wrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.decorators.rename_wrap" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.decorators.to_from_wrapper_factory">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.decorators.</span></span><span class="sig-name descname"><span class="pre">to_from_wrapper_factory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/decorators.html#to_from_wrapper_factory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.decorators.to_from_wrapper_factory" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.decorators.upload_wrap">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.decorators.</span></span><span class="sig-name descname"><span class="pre">upload_wrap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/decorators.html#upload_wrap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.decorators.upload_wrap" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-dir_ops.local_dir_ops">
+<span id="dir-ops-local-dir-ops-module"></span><h2>dir_ops.local_dir_ops module<a class="headerlink" href="#module-dir_ops.local_dir_ops" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Dir">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dir_ops.local_dir_ops.</span></span><span class="sig-name descname"><span class="pre">Dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Dir" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dir_ops.base_dir_ops.BaseDir" title="dir_ops.base_dir_ops.BaseDir"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDir</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Dir.copy_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">copy_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Dir.copy_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Dir.copy_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Dir.create_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Dir.create_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Dir.create_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Dir.exists_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exists_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Dir.exists_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Dir.exists_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Dir.get_size_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_size_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Dir.get_size_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Dir.get_size_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Dir.list_files_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_files_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Dir.list_files_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Dir.list_files_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Dir.list_subfolders_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">list_subfolders_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Dir.list_subfolders_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Dir.list_subfolders_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Dir.open_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">open_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Dir.open_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Dir.open_dir" title="Permalink to this definition"></a></dt>
+<dd><p>Opens the dir in the file explorer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Dir.remove_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remove_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Dir.remove_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Dir.remove_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Dirs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dir_ops.local_dir_ops.</span></span><span class="sig-name descname"><span class="pre">Dirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Dirs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Dirs" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dir_ops.base_dir_ops.BaseDirs" title="dir_ops.base_dir_ops.BaseDirs"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDirs</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Path">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dir_ops.local_dir_ops.</span></span><span class="sig-name descname"><span class="pre">Path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Path" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dir_ops.local_dir_ops.Dir" title="dir_ops.local_dir_ops.Dir"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dir</span></code></a>, <a class="reference internal" href="#dir_ops.base_dir_ops.BasePath" title="dir_ops.base_dir_ops.BasePath"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePath</span></code></a></p>
+<p>Inherits from the Dir class found in Dir.py
+Path (uppercase P) is a Path class, path (lowercase P) is a string with file absolute path</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Path.copy_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">copy_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Path.copy_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Path.copy_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Path.create_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Path.create_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Path.create_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Path.exists_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">exists_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Path.exists_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Path.exists_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Path.get_mtime_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_mtime_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">datetime</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Path.get_mtime_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Path.get_mtime_path" title="Permalink to this definition"></a></dt>
+<dd><p>get the time of modification as a datetime object</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Path.get_size_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_size_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Path.get_size_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Path.get_size_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Path.import_module">
+<span class="sig-name descname"><span class="pre">import_module</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Path.import_module"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Path.import_module" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Path.import_module_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">import_module_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Path.import_module_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Path.import_module_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Path.read_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">read_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Path.read_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Path.read_path" title="Permalink to this definition"></a></dt>
+<dd><p>reads from a text file at path, read py_starter.read_text_file() for kwargs</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Path.remove_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">remove_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Path.remove_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Path.remove_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Path.rename_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rename_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Path.rename_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Path.rename_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Path.write_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">write_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Path.write_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Path.write_path" title="Permalink to this definition"></a></dt>
+<dd><p>writes to a text file at path, read py_starter.write_text_file() for kwargs</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dir_ops.local_dir_ops.Paths">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dir_ops.local_dir_ops.</span></span><span class="sig-name descname"><span class="pre">Paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/local_dir_ops.html#Paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.local_dir_ops.Paths" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dir_ops.local_dir_ops.Dirs" title="dir_ops.local_dir_ops.Dirs"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dirs</span></code></a>, <a class="reference internal" href="#dir_ops.base_dir_ops.BasePaths" title="dir_ops.base_dir_ops.BasePaths"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePaths</span></code></a></p>
+</dd></dl>
+
+</section>
+<section id="module-dir_ops.remote_dir_ops">
+<span id="dir-ops-remote-dir-ops-module"></span><h2>dir_ops.remote_dir_ops module<a class="headerlink" href="#module-dir_ops.remote_dir_ops" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="dir_ops.remote_dir_ops.RemoteDir">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dir_ops.remote_dir_ops.</span></span><span class="sig-name descname"><span class="pre">RemoteDir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/remote_dir_ops.html#RemoteDir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.remote_dir_ops.RemoteDir" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dir_ops.base_dir_ops.BaseDir" title="dir_ops.base_dir_ops.BaseDir"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDir</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.remote_dir_ops.RemoteDir.download">
+<span class="sig-name descname"><span class="pre">download</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/remote_dir_ops.html#RemoteDir.download"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.remote_dir_ops.RemoteDir.download" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.remote_dir_ops.RemoteDir.download_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">download_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/remote_dir_ops.html#RemoteDir.download_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.remote_dir_ops.RemoteDir.download_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.remote_dir_ops.RemoteDir.upload">
+<span class="sig-name descname"><span class="pre">upload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/remote_dir_ops.html#RemoteDir.upload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.remote_dir_ops.RemoteDir.upload" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.remote_dir_ops.RemoteDir.upload_dir">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">upload_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/remote_dir_ops.html#RemoteDir.upload_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.remote_dir_ops.RemoteDir.upload_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dir_ops.remote_dir_ops.RemoteDirs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dir_ops.remote_dir_ops.</span></span><span class="sig-name descname"><span class="pre">RemoteDirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/remote_dir_ops.html#RemoteDirs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.remote_dir_ops.RemoteDirs" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dir_ops.base_dir_ops.BaseDirs" title="dir_ops.base_dir_ops.BaseDirs"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseDirs</span></code></a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dir_ops.remote_dir_ops.RemotePath">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dir_ops.remote_dir_ops.</span></span><span class="sig-name descname"><span class="pre">RemotePath</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/remote_dir_ops.html#RemotePath"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.remote_dir_ops.RemotePath" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dir_ops.remote_dir_ops.RemoteDir" title="dir_ops.remote_dir_ops.RemoteDir"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteDir</span></code></a>, <a class="reference internal" href="#dir_ops.base_dir_ops.BasePath" title="dir_ops.base_dir_ops.BasePath"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePath</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.remote_dir_ops.RemotePath.download_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">download_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/remote_dir_ops.html#RemotePath.download_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.remote_dir_ops.RemotePath.download_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="dir_ops.remote_dir_ops.RemotePath.upload_path">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">upload_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/remote_dir_ops.html#RemotePath.upload_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.remote_dir_ops.RemotePath.upload_path" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="dir_ops.remote_dir_ops.RemotePaths">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dir_ops.remote_dir_ops.</span></span><span class="sig-name descname"><span class="pre">RemotePaths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/remote_dir_ops.html#RemotePaths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.remote_dir_ops.RemotePaths" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#dir_ops.remote_dir_ops.RemoteDirs" title="dir_ops.remote_dir_ops.RemoteDirs"><code class="xref py py-class docutils literal notranslate"><span class="pre">RemoteDirs</span></code></a>, <a class="reference internal" href="#dir_ops.base_dir_ops.BasePaths" title="dir_ops.base_dir_ops.BasePaths"><code class="xref py py-class docutils literal notranslate"><span class="pre">BasePaths</span></code></a></p>
+</dd></dl>
+
+</section>
+<section id="module-dir_ops.utils">
+<span id="dir-ops-utils-module"></span><h2>dir_ops.utils module<a class="headerlink" href="#module-dir_ops.utils" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.add_prefix_to_paths">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">add_prefix_to_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_paths</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/utils.html#add_prefix_to_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.add_prefix_to_paths" title="Permalink to this definition"></a></dt>
+<dd><p>adds prefix to a list of relaive paths</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.convert_bytes">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">convert_bytes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bytes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conversion</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'MB'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Any</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/dir_ops/utils.html#convert_bytes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.convert_bytes" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.create_shortcut">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">create_shortcut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shortcut_Dir</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/dir_ops/utils.html#create_shortcut"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.create_shortcut" title="Permalink to this definition"></a></dt>
+<dd><p>places a shortcut from target_Path to shortcut_Dir</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.get_cwd">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">get_cwd</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/dir_ops/utils.html#get_cwd"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.get_cwd" title="Permalink to this definition"></a></dt>
+<dd><p>returns current working directory</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.get_desktop_dir">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">get_desktop_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="reference internal" href="_modules/dir_ops/utils.html#get_desktop_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.get_desktop_dir" title="Permalink to this definition"></a></dt>
+<dd><p>get the location of the desktop</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.get_env_var_path_delim">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">get_env_var_path_delim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/dir_ops/utils.html#get_env_var_path_delim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.get_env_var_path_delim" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the delimitter for the OS’s path environment variables</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.get_home_dir">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">get_home_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/utils.html#get_home_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.get_home_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.is_dir">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">is_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/utils.html#is_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.is_dir" title="Permalink to this definition"></a></dt>
+<dd><p>returns a boolean value to check if the path is a directory</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.is_file">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">is_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="reference internal" href="_modules/dir_ops/utils.html#is_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.is_file" title="Permalink to this definition"></a></dt>
+<dd><p>returns a boolean value to check if the path is a file</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.join">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">join</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/dir_ops/utils.html#join"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.join" title="Permalink to this definition"></a></dt>
+<dd><p>joins a list of dirs into a path</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.join_env_var_paths">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">join_env_var_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">paths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/dir_ops/utils.html#join_env_var_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.join_env_var_paths" title="Permalink to this definition"></a></dt>
+<dd><p>returns ‘C:/Path1;C:/Path2’</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.path_to_dirs">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">path_to_dirs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/dir_ops/utils.html#path_to_dirs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.path_to_dirs" title="Permalink to this definition"></a></dt>
+<dd><p>splits a path into directories</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.print_to_from">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">print_to_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">print_off</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_str</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/utils.html#print_to_from"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.print_to_from" title="Permalink to this definition"></a></dt>
+<dd><p>Copying C:/Users/path/file.txt -&gt;  C:/Users/newfile.txt</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.remove_hanging_slashes">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">remove_hanging_slashes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/utils.html#remove_hanging_slashes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.remove_hanging_slashes" title="Permalink to this definition"></a></dt>
+<dd><p>removes ending slashes from paths
+turns “asdf/asdf//” into “asdf/sadf”</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.remove_prefix_from_paths">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">remove_prefix_from_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">full_paths</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dir_ops/utils.html#remove_prefix_from_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.remove_prefix_from_paths" title="Permalink to this definition"></a></dt>
+<dd><p>Removes prefix from full paths</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.replace_delims">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">replace_delims</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">secondary_delim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'\\'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'/'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/dir_ops/utils.html#replace_delims"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.replace_delims" title="Permalink to this definition"></a></dt>
+<dd><p>turns datadir
+ile.txt into data/dir/file.txt</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dir_ops.utils.split_env_var_paths">
+<span class="sig-prename descclassname"><span class="pre">dir_ops.utils.</span></span><span class="sig-name descname"><span class="pre">split_env_var_paths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/dir_ops/utils.html#split_env_var_paths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#dir_ops.utils.split_env_var_paths" title="Permalink to this definition"></a></dt>
+<dd><p>returns a list of path strings split on the system delimitter</p>
+</dd></dl>
+
+</section>
+<section id="module-dir_ops">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-dir_ops" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="src" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, James Kabbes.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

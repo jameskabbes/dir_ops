@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dir_ops.local_dir_ops &mdash; kabbes_dir_ops 0.10.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            kabbes_dir_ops
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">kabbes_dir_ops</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">dir_ops.local_dir_ops</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for dir_ops.local_dir_ops</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">annotations</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">Callable</span>
+
+<span class="kn">import</span> <span class="nn">dir_ops</span> <span class="k">as</span> <span class="nn">do</span>
+<span class="kn">import</span> <span class="nn">py_starter</span> <span class="k">as</span> <span class="nn">ps</span>
+
+
+<div class="viewcode-block" id="Dir"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Dir">[docs]</a><span class="k">class</span> <span class="nc">Dir</span> <span class="p">(</span> <span class="n">do</span><span class="o">.</span><span class="n">BaseDir</span> <span class="p">)</span> <span class="p">:</span>
+
+
+    <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">):</span>
+
+        <span class="n">do</span><span class="o">.</span><span class="n">BaseDir</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DIR_CLASS</span> <span class="o">=</span> <span class="n">Dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PATH_CLASS</span> <span class="o">=</span> <span class="n">Path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DIRS_CLASS</span> <span class="o">=</span> <span class="n">Dirs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PATHS_CLASS</span> <span class="o">=</span> <span class="n">Paths</span>
+
+    
+<div class="viewcode-block" id="Dir.open_dir"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Dir.open_dir">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">open_dir</span><span class="p">(</span> <span class="nb">dir</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Opens the dir in the file explorer &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Windows&#39;</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">startfile</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Darwin&#39;</span><span class="p">:</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="nb">dir</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="Dir.exists_dir"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Dir.exists_dir">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">exists_dir</span><span class="p">(</span> <span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span> <span class="nb">dir</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dir.remove_dir"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Dir.remove_dir">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">remove_dir</span><span class="p">(</span> <span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dir.create_dir"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Dir.create_dir">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_dir</span><span class="p">(</span> <span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span> <span class="nb">dir</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dir.copy_dir"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Dir.copy_dir">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">copy_dir</span><span class="p">(</span> <span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">destination</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span> <span class="nb">dir</span><span class="p">,</span> <span class="n">destination</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dir.list_files_dir"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Dir.list_files_dir">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">list_files_dir</span><span class="p">(</span> <span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+
+        <span class="n">contents</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span> <span class="nb">dir</span> <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span> <span class="nb">dir</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">contents</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">):</span>
+                <span class="k">del</span> <span class="n">contents</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">contents</span></div>
+
+<div class="viewcode-block" id="Dir.list_subfolders_dir"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Dir.list_subfolders_dir">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">list_subfolders_dir</span><span class="p">(</span> <span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+
+        <span class="n">contents</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span> <span class="nb">dir</span> <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span> <span class="nb">dir</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">contents</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">):</span>
+                <span class="k">del</span> <span class="n">contents</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">contents</span></div>
+
+<div class="viewcode-block" id="Dir.get_size_dir"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Dir.get_size_dir">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_size_dir</span><span class="p">(</span> <span class="nb">dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+
+        <span class="bp">self</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span> <span class="n">path</span> <span class="o">=</span> <span class="nb">dir</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">inherited_kwargs</span> <span class="p">)</span>
+        <span class="n">Paths_inst</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_contents_Paths</span><span class="p">(</span> <span class="n">block_dirs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">block_paths</span><span class="o">=</span><span class="kc">False</span> <span class="p">)</span>
+
+        <span class="nb">bytes</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">Path_inst</span> <span class="ow">in</span> <span class="n">Paths_inst</span><span class="p">:</span>
+            <span class="n">Path_inst</span><span class="o">.</span><span class="n">get_size</span><span class="p">(</span> <span class="n">conversion</span> <span class="o">=</span> <span class="kc">None</span> <span class="p">)</span>
+            <span class="nb">bytes</span> <span class="o">+=</span> <span class="n">Path_inst</span><span class="o">.</span><span class="n">size</span> 
+
+        <span class="k">return</span> <span class="nb">bytes</span>         </div></div>
+
+
+<div class="viewcode-block" id="Path"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Path">[docs]</a><span class="k">class</span> <span class="nc">Path</span><span class="p">(</span> <span class="n">Dir</span><span class="p">,</span> <span class="n">do</span><span class="o">.</span><span class="n">BasePath</span> <span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Inherits from the Dir class found in Dir.py</span>
+<span class="sd">    Path (uppercase P) is a Path class, path (lowercase P) is a string with file absolute path</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">):</span>
+
+        <span class="n">do</span><span class="o">.</span><span class="n">Dir</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span>
+        <span class="n">do</span><span class="o">.</span><span class="n">BasePath</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">DIR_CLASS</span> <span class="o">=</span> <span class="n">Dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PATH_CLASS</span> <span class="o">=</span> <span class="n">Path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DIRS_CLASS</span> <span class="o">=</span> <span class="n">Dirs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PATHS_CLASS</span> <span class="o">=</span> <span class="n">Paths</span>
+
+<div class="viewcode-block" id="Path.exists_path"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Path.exists_path">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">exists_path</span><span class="p">(</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">assert</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span> <span class="n">path</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Path.copy_path"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Path.copy_path">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">copy_path</span><span class="p">(</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">destination</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Path.create_path"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Path.create_path">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">create_path</span><span class="p">(</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+        <span class="bp">self</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span> <span class="n">path</span> <span class="p">)</span>        
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span> <span class="n">string</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span> <span class="p">):</span>
+            <span class="k">assert</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="Path.remove_path"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Path.remove_path">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">remove_path</span><span class="p">(</span><span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Path.rename_path"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Path.rename_path">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">rename_path</span><span class="p">(</span> <span class="n">path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">destination</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span> <span class="n">path</span><span class="p">,</span> <span class="n">destination</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Path.get_size_path"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Path.get_size_path">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_size_path</span><span class="p">(</span> <span class="n">path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span> <span class="n">path</span> <span class="p">)</span><span class="o">.</span><span class="n">st_size</span></div>
+
+<div class="viewcode-block" id="Path.get_mtime_path"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Path.get_mtime_path">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">get_mtime_path</span><span class="p">(</span> <span class="n">path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">:</span>
+
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;get the time of modification as a datetime object&quot;&quot;&quot;</span>
+
+        <span class="n">mtime</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_mtime</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span> <span class="n">mtime</span> <span class="p">)</span>
+        <span class="k">return</span> <span class="n">dt</span></div>
+
+<div class="viewcode-block" id="Path.read_path"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Path.read_path">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">read_path</span><span class="p">(</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;reads from a text file at path, read py_starter.read_text_file() for kwargs &quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="n">ps</span><span class="o">.</span><span class="n">read_text_file</span><span class="p">(</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Path.write_path"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Path.write_path">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">write_path</span><span class="p">(</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;writes to a text file at path, read py_starter.write_text_file() for kwargs &quot;&quot;&quot;</span>
+
+        <span class="n">ps</span><span class="o">.</span><span class="n">write_text_file</span><span class="p">(</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Path.import_module"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Path.import_module">[docs]</a>    <span class="nd">@do</span><span class="o">.</span><span class="n">inherited_instance_method</span>
+    <span class="k">def</span> <span class="nf">import_module</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span> <span class="p">:</span>
+        <span class="k">pass</span></div>
+    
+<div class="viewcode-block" id="Path.import_module_path"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Path.import_module_path">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">import_module_path</span><span class="p">(</span> <span class="n">path</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Callable</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">ps</span><span class="o">.</span><span class="n">import_module_from_path</span><span class="p">(</span> <span class="n">path</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Dirs"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Dirs">[docs]</a><span class="k">class</span> <span class="nc">Dirs</span><span class="p">(</span> <span class="n">do</span><span class="o">.</span><span class="n">BaseDirs</span> <span class="p">):</span>
+
+
+    <span class="k">def</span> <span class="fm">__init__</span> <span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">):</span>
+
+        <span class="n">do</span><span class="o">.</span><span class="n">BaseDirs</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DIR_CLASS</span> <span class="o">=</span> <span class="n">Dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PATH_CLASS</span> <span class="o">=</span> <span class="n">Path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DIRS_CLASS</span> <span class="o">=</span> <span class="n">Dirs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PATHS_CLASS</span> <span class="o">=</span> <span class="n">Paths</span></div>
+
+
+<div class="viewcode-block" id="Paths"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.local_dir_ops.Paths">[docs]</a><span class="k">class</span> <span class="nc">Paths</span><span class="p">(</span> <span class="n">Dirs</span><span class="p">,</span> <span class="n">do</span><span class="o">.</span><span class="n">BasePaths</span> <span class="p">):</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">):</span>
+
+        <span class="n">Dirs</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span> <span class="bp">self</span> <span class="p">)</span>
+        <span class="n">do</span><span class="o">.</span><span class="n">BasePaths</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span> <span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span> <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DIR_CLASS</span> <span class="o">=</span> <span class="n">Dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PATH_CLASS</span> <span class="o">=</span> <span class="n">Path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">DIRS_CLASS</span> <span class="o">=</span> <span class="n">Dirs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">PATHS_CLASS</span> <span class="o">=</span> <span class="n">Paths</span></div>
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, James Kabbes.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

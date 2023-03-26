@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dir_ops.utils &mdash; kabbes_dir_ops 0.10.0 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            kabbes_dir_ops
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">kabbes_dir_ops</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">dir_ops.utils</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for dir_ops.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">platform</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">DELIM</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span>
+<span class="n">SECONDARY_DELIM</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">&#39;</span>
+
+<div class="viewcode-block" id="get_cwd"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.get_cwd">[docs]</a><span class="k">def</span> <span class="nf">get_cwd</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;returns current working directory&quot;&quot;&quot;</span>
+
+    <span class="n">cd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+    <span class="c1">#replace the cd with primary delim</span>
+    <span class="n">cd_replaced</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span> <span class="o">*</span> <span class="n">path_to_dirs</span><span class="p">(</span><span class="n">cd</span><span class="p">)</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="n">cd_replaced</span></div>
+
+<div class="viewcode-block" id="path_to_dirs"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.path_to_dirs">[docs]</a><span class="k">def</span> <span class="nf">path_to_dirs</span><span class="p">(</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;splits a path into directories&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">path</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span> <span class="n">DELIM</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="is_file"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.is_file">[docs]</a><span class="k">def</span> <span class="nf">is_file</span><span class="p">(</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;returns a boolean value to check if the path is a file&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span> <span class="n">path</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="is_dir"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.is_dir">[docs]</a><span class="k">def</span> <span class="nf">is_dir</span><span class="p">(</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span> <span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;returns a boolean value to check if the path is a directory&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span> <span class="n">path</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="replace_delims"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.replace_delims">[docs]</a><span class="k">def</span> <span class="nf">replace_delims</span><span class="p">(</span> <span class="n">path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">secondary_delim</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">SECONDARY_DELIM</span><span class="p">,</span> <span class="n">delim</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">DELIM</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;turns data\dir\file.txt into data/dir/file.txt&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">path</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span> <span class="n">secondary_delim</span><span class="p">,</span> <span class="n">delim</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="join"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.join">[docs]</a><span class="k">def</span> <span class="nf">join</span><span class="p">(</span> <span class="o">*</span><span class="n">items</span><span class="p">:</span> <span class="nb">str</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;joins a list of dirs into a path&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">DELIM</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">items</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="convert_bytes"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.convert_bytes">[docs]</a><span class="k">def</span> <span class="nf">convert_bytes</span><span class="p">(</span> <span class="nb">bytes</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">conversion</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;MB&#39;</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span> <span class="p">]:</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">conversion</span> <span class="o">=</span> <span class="n">conversion</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="n">kb_to_b</span> <span class="o">=</span> <span class="mi">1024</span>
+
+    <span class="n">conversion_factors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;KB&#39;</span><span class="p">,</span><span class="s1">&#39;MB&#39;</span><span class="p">,</span><span class="s1">&#39;GB&#39;</span><span class="p">,</span><span class="s1">&#39;TB&#39;</span><span class="p">,</span><span class="s1">&#39;PB&#39;</span><span class="p">,</span><span class="s1">&#39;EB&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">conversion</span> <span class="ow">in</span> <span class="n">conversion_factors</span><span class="p">:</span>
+
+        <span class="n">power</span> <span class="o">=</span> <span class="n">conversion_factors</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">conversion</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="nb">bytes</span> <span class="o">/</span> <span class="p">(</span><span class="n">kb_to_b</span> <span class="o">**</span> <span class="n">power</span><span class="p">),</span> <span class="n">conversion</span>
+
+    <span class="k">return</span> <span class="nb">bytes</span><span class="p">,</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="add_prefix_to_paths"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.add_prefix_to_paths">[docs]</a><span class="k">def</span> <span class="nf">add_prefix_to_paths</span><span class="p">(</span> <span class="n">prefix_path</span><span class="p">,</span> <span class="n">relative_paths</span> <span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;adds prefix to a list of relaive paths&quot;&quot;&quot;</span>
+
+    <span class="n">full_paths</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">relative_path</span> <span class="ow">in</span> <span class="n">relative_paths</span><span class="p">:</span>
+        <span class="n">full_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">join</span><span class="p">(</span><span class="n">prefix_path</span><span class="p">,</span> <span class="n">relative_path</span><span class="p">)</span> <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">full_paths</span></div>
+
+<div class="viewcode-block" id="remove_prefix_from_paths"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.remove_prefix_from_paths">[docs]</a><span class="k">def</span> <span class="nf">remove_prefix_from_paths</span><span class="p">(</span> <span class="n">prefix_path</span><span class="p">,</span> <span class="n">full_paths</span> <span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Removes prefix from full paths&quot;&quot;&quot;</span>
+
+    <span class="n">number_of_dirs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span> <span class="n">path_to_dirs</span><span class="p">(</span><span class="n">prefix_path</span><span class="p">)</span> <span class="p">)</span>
+
+    <span class="n">relative_paths</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">full_path</span> <span class="ow">in</span> <span class="n">full_paths</span><span class="p">:</span>
+
+        <span class="n">folder_list</span> <span class="o">=</span> <span class="n">path_to_dirs</span><span class="p">(</span> <span class="n">full_path</span> <span class="p">)</span>
+        <span class="n">relative_list</span> <span class="o">=</span> <span class="n">folder_list</span><span class="p">[</span> <span class="n">number_of_dirs</span> <span class="p">:</span> <span class="p">]</span>
+
+        <span class="n">relative_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">join</span><span class="p">(</span><span class="o">*</span><span class="n">relative_list</span><span class="p">)</span> <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">relative_paths</span></div>
+
+<div class="viewcode-block" id="remove_hanging_slashes"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.remove_hanging_slashes">[docs]</a><span class="k">def</span> <span class="nf">remove_hanging_slashes</span><span class="p">(</span> <span class="n">path</span> <span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;removes ending slashes from paths</span>
+<span class="sd">    turns &quot;asdf/asdf//&quot; into &quot;asdf/sadf&quot;   &quot;&quot;&quot;</span>
+
+    <span class="c1"># dont go through all the</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span> <span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">path</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;/&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">path</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">path</span></div>
+
+<div class="viewcode-block" id="get_desktop_dir"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.get_desktop_dir">[docs]</a><span class="k">def</span> <span class="nf">get_desktop_dir</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;get the location of the desktop&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Windows&#39;</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">winshell</span>
+        <span class="k">return</span> <span class="n">winshell</span><span class="o">.</span><span class="n">desktop</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="get_home_dir"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.get_home_dir">[docs]</a><span class="k">def</span> <span class="nf">get_home_dir</span><span class="p">():</span>
+
+    <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">())</span>    </div>
+
+<div class="viewcode-block" id="create_shortcut"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.create_shortcut">[docs]</a><span class="k">def</span> <span class="nf">create_shortcut</span><span class="p">(</span> <span class="n">target_Path</span><span class="p">,</span> <span class="n">shortcut_Dir</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;places a shortcut from target_Path to shortcut_Dir&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Windows&#39;</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">winshell</span>
+
+        <span class="n">shortcut_path</span> <span class="o">=</span> <span class="n">shortcut_Dir</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">target_Path</span><span class="o">.</span><span class="n">root</span> <span class="o">+</span> <span class="s1">&#39;.lnk&#39;</span> <span class="p">)</span>
+        <span class="n">winshell</span><span class="o">.</span><span class="n">CreateShortcut</span><span class="p">(</span> <span class="n">Path</span><span class="o">=</span><span class="n">shortcut_path</span><span class="p">,</span> <span class="n">Target</span><span class="o">=</span><span class="n">target_Path</span><span class="o">.</span><span class="n">p</span> <span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="s1">&#39;No instructions for current OS&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="get_env_var_path_delim"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.get_env_var_path_delim">[docs]</a><span class="k">def</span> <span class="nf">get_env_var_path_delim</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the delimitter for the OS&#39;s path environment variables&quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Windows&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;;&#39;</span>
+    <span class="k">elif</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Linux&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;:&#39;</span>
+    <span class="k">elif</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;Darwin&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;:&#39;</span></div>
+    
+
+<div class="viewcode-block" id="split_env_var_paths"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.split_env_var_paths">[docs]</a><span class="k">def</span> <span class="nf">split_env_var_paths</span><span class="p">(</span> <span class="n">string</span><span class="p">:</span> <span class="nb">str</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;returns a list of path strings split on the system delimitter&quot;&quot;&quot;</span>
+
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span> <span class="n">get_env_var_path_delim</span><span class="p">()</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="join_env_var_paths"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.join_env_var_paths">[docs]</a><span class="k">def</span> <span class="nf">join_env_var_paths</span><span class="p">(</span> <span class="n">paths</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; returns &#39;C:/Path1;C:/Path2&#39; &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">get_env_var_path_delim</span><span class="p">()</span><span class="o">.</span><span class="n">join</span><span class="p">(</span> <span class="n">paths</span> <span class="p">)</span></div>
+
+<div class="viewcode-block" id="print_to_from"><a class="viewcode-back" href="../../dir_ops.html#dir_ops.utils.print_to_from">[docs]</a><span class="k">def</span> <span class="nf">print_to_from</span><span class="p">(</span> <span class="n">print_off</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">action_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">from_str</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">to_str</span><span class="p">:</span> <span class="nb">str</span> <span class="p">):</span>
+
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; Copying C:/Users/path/file.txt -&gt;  C:/Users/newfile.txt &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="n">print_off</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="p">(</span> <span class="s2">&quot;</span><span class="si">{action_str}</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> </span><span class="si">{from_str}</span><span class="s2"> -&gt; </span><span class="se">\t</span><span class="s2"> </span><span class="si">{to_str}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="n">action_str</span> <span class="o">=</span> <span class="n">action_str</span><span class="p">,</span> <span class="n">to_str</span> <span class="o">=</span> <span class="n">to_str</span><span class="p">,</span> <span class="n">from_str</span> <span class="o">=</span> <span class="n">from_str</span> <span class="p">)</span> <span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, James Kabbes.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+dir\_ops package
+================
+
+Submodules
+----------
+
+dir\_ops.base\_dir\_ops module
+------------------------------
+
+.. automodule:: dir_ops.base_dir_ops
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+dir\_ops.decorators module
+--------------------------
+
+.. automodule:: dir_ops.decorators
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+dir\_ops.local\_dir\_ops module
+-------------------------------
+
+.. automodule:: dir_ops.local_dir_ops
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+dir\_ops.remote\_dir\_ops module
+--------------------------------
+
+.. automodule:: dir_ops.remote_dir_ops
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+dir\_ops.utils module
+---------------------
+
+.. automodule:: dir_ops.utils
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: dir_ops
+   :members:
+   :undoc-members:
+   :show-inheritance:
