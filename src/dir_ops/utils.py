@@ -110,6 +110,15 @@ def get_desktop_dir() -> Any:
 
     return None
 
+def get_volumes_dir():
+
+    """get the location of the desktop"""
+
+    if platform.system() == 'Darwin':
+        return '/Volumes'
+
+    return None
+
 def get_home_dir():
 
     return str(Path.home())    
